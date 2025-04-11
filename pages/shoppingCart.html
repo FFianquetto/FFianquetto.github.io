@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT8 Store - Shopping Cart</title>
+    <title>KT8 Store - Product</title>
     <script>
         // Cargar el tema correcto antes de que se muestre la página
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -12,46 +13,65 @@
         themeLink.id = 'theme-style';
         themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
         document.head.appendChild(themeLink);
+
+        // Cargar el CSS de quickView según el tema
+        const quickViewLink = document.createElement('link');
+        quickViewLink.rel = 'stylesheet';
+        quickViewLink.href = isDarkMode ? '../styles/whiteQuickView.css' : '../styles/darkQuickView.css';
+        document.head.appendChild(quickViewLink);
+
+        // Agregar clase dark-mode al body si está en modo oscuro
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.add('light-mode');
+        }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Navbar -->
         <nav class="navbar">
             <div class="logo-section">
-                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo" id="logo-img">
             </div>
+
             <div class="nav-links">
-                <a href="../index.html">HOME
+                <a href="../index.html">
+                    HOME
+                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="apparel.html">
+                <a href="apparel.html" class="active">
                     APPAREL
+                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="accesories.html">
                     ACCESORIES
+                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="sale.html">
                     COMING SOON
-                    <div class="nav-indicator"></div>
                 </a>
                 <a href="giftCard.html">
                     GIFTCARD
+                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
             </div>
             <div class="nav-right">
                 <div class="currency-selector">
                     <select id="currency-select">
-                        <option value="USD">USD $</option>
-                        <option value="EUR">EUR €</option>
-                        <option value="MXN">MXN $</option>
-                        <option value="ARS">ARS $</option>
-                        <option value="GBP">GBP £</option>
-                        <option value="JPY">JPY ¥</option>
+                        <option value="USD">USD $</option><i class="fas fa-chevron-down"></i>
+                        <option value="EUR">EUR €</option><i class="fas fa-chevron-down"></i>
+                        <option value="MXN">MXN $</option><i class="fas fa-chevron-down"></i>
+                        <option value="ARS">ARS $</option><i class="fas fa-chevron-down"></i>
+                        <option value="GBP">GBP £</option><i class="fas fa-chevron-down"></i>
+                        <option value="JPY">JPY ¥</option><i class="fas fa-chevron-down"></i>
                     </select>
                 </div>
                 <button class="join-btn">JOIN US!</button>
@@ -61,58 +81,145 @@
             </div>
         </nav>
 
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <div class="kt8-logo">
-                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+        <!-- Contenido del Producto -->
+        <div class="product-container">
+            <div class="product-image">
+                <img src="" alt="Zomboy Vintage Punk Hoodie" id="product-img">
             </div>
-            <div class="search-container">
-                <input type="text" placeholder="Search for...">
-            </div>
-            <div class="social-media">
-                <div class="dark-mode-toggle">
-                    <button id="darkModeBtn" onclick="toggleDarkMode()">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
-                <span>SOCIAL MEDIA</span>
-                <div class="social-icons">
-                    <i class="fab fa-facebook"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-instagram"></i>
-                </div>
-            </div>
-        </div>
+            <div class="product-info">
+                <h1 class="product-title" id="product-title"></h1>
+                <div class="product-price price-text" id="product-price"></div>
 
-        <!-- Cart Content -->
-        <div class="cart-content">
-            <h2>Carrito de Compras</h2>
-            <div class="cart-items">
-                <!-- Los items del carrito se agregarán dinámicamente -->
-            </div>
-            <div class="cart-summary">
-                <div class="subtotal">
-                    <span>Subtotal:</span>
-                    <span>$0.00 USD</span>
+                <div class="size-grid">
+                    <button class="size-button">SMALL</button>
+                    <button class="size-button">MEDIUM</button>
+                    <button class="size-button">LARGE</button>
+                    <button class="size-button">X-LARGE</button>
+                    <button class="size-button">XX-LARGE</button>
+                    <button class="size-button">XXX-LARGE</button>
                 </div>
-                <div class="shipping">
-                    <span>Envío:</span>
-                    <span>$0.00 USD</span>
-                </div>
-                <div class="total">
-                    <span>Total:</span>
-                    <span>$0.00 USD</span>
-                </div>
-                <button class="checkout-btn">Proceder al Pago</button>
-            </div>
-        </div>
 
-        <div class="help-button">
-            <div class="help-icon">?</div>
-            <span>Ayuda</span>
+                <div class="quantity-label">QUANTITY</div>
+                <div class="quantity-selector">
+                    <button class="quantity-button minus">-</button>
+                    <span class="quantity-display">1</span>
+                    <button class="quantity-button plus">+</button>
+                </div>
+
+                <button class="add-to-cart">ADD TO CART</button>
+                <button class="buy-now">Buy now with ShopPay</button>
+                <div class="more-options">More payment options</div>
+
+                <div class="details">
+                    <h3>DETAILS</h3>
+                    <ul>
+                        <li>75% cotton, 25% polyester</li>
+                        <li>Heavy Weight</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script>
+        // Cargar la información del producto desde localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const productImage = document.getElementById('product-img');
+            const productTitle = document.getElementById('product-title');
+            const productPrice = document.getElementById('product-price');
+            const logoImg = document.getElementById('logo-img');
+
+            // Obtener la información del producto desde localStorage
+            const imageSrc = localStorage.getItem('quickViewImage');
+            const title = localStorage.getItem('quickViewTitle');
+            const price = localStorage.getItem('quickViewPrice');
+
+            // Actualizar el ícono del botón según el tema
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+
+            // Actualizar la información del producto
+            if (imageSrc) {
+                // Ajustar la ruta de la imagen si es necesario
+                let rutaImagen = imageSrc;
+
+                // Si la ruta ya incluye 'assets/', no necesitamos hacer más ajustes
+                if (!rutaImagen.includes('assets/')) {
+                    // Extraer el nombre del archivo
+                    const fileName = rutaImagen.split('/').pop();
+
+                    // Determinar la carpeta según el nombre del archivo
+                    if (fileName.startsWith('Z')) {
+                        rutaImagen = '../assets/apparelImg/' + fileName;
+                    } else if (fileName.startsWith('Z1')) {
+                        rutaImagen = '../assets/accesoriesImg/' + fileName;
+                    } else if (fileName.startsWith('S')) {
+                        rutaImagen = '../assets/saleImg/' + fileName;
+                    } else if (fileName.includes('giftCard')) {
+                        rutaImagen = '../assets/giftCard/' + fileName;
+                    } else {
+                        rutaImagen = '../assets/apparelImg/' + fileName;
+                    }
+                }
+
+                productImage.src = rutaImagen;
+                productImage.alt = title || 'Producto';
+
+                // Mostrar mensaje en consola para depuración
+                console.log('Ruta de imagen final:', rutaImagen);
+            }
+
+            if (title) {
+                productTitle.textContent = title;
+                // Actualizar el título de la página
+                document.title = 'KT8 Store - ' + title;
+            }
+
+            if (price) {
+                productPrice.textContent = price;
+                // Guardar el precio original para la conversión de moneda
+                productPrice.setAttribute('data-original-price', price.replace(/[^0-9.]/g, ''));
+            }
+
+            // Actualizar el logo según el tema
+            if (isDarkMode) {
+                logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+            }
+
+            // Mostrar mensaje en consola para depuración
+            console.log('Producto cargado:', { imageSrc, title, price });
+        });
+
+        // Funcionalidad para los botones de cantidad
+        const quantityDisplay = document.querySelector('.quantity-display');
+        let quantity = 1;
+
+        document.querySelector('.minus').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                quantityDisplay.textContent = quantity;
+            }
+        });
+
+        document.querySelector('.plus').addEventListener('click', () => {
+            quantity++;
+            quantityDisplay.textContent = quantity;
+        });
+
+        // Funcionalidad para los botones de talla
+        document.querySelectorAll('.size-button').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.size-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Funcionalidad para el botón de cerrar
+        document.querySelector('.quickview-close')?.addEventListener('click', () => {
+            window.close();
+        });
+    </script>
+    <script src="../scripts/currency.js"></script>
     <footer class="footer">
         <div class="footer-text">© 2025, KT8 Merch Co All rights reserved.</div>
         <div class="payment-methods">
@@ -124,35 +231,6 @@
         </div>
     </footer>
 
-    <script>
-       function toggleDarkMode() {
-            const themeLink = document.getElementById('theme-style');
-            const bannerImg = document.querySelector('.banner img');
-            const logoImg = document.querySelector('.logo-section img');
-            const isDarkMode = themeLink.href.includes('lightMode.css');
-
-            // Cambiar el tema CSS
-            themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
-
-            // Cambiar el logo
-            logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
-
-            // Cambiar el ícono del botón
-            darkModeBtn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-
-            // Guardar preferencia
-            localStorage.setItem('darkMode', isDarkMode);
-        }
-
-        if (localStorage.getItem('darkMode') === 'true') {
-            const themeLink = document.getElementById('theme-style');
-            const bannerImg = document.querySelector('.banner img');
-            const logoImg = document.querySelector('.logo-section img');
-            themeLink.href = '../styles/darkMode.css';
-            logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
-            darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-    </script>
-    <script src="../scripts/currency.js"></script>
 </body>
+
 </html>

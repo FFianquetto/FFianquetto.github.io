@@ -17,7 +17,7 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles/search.css">
-
+    <link rel="stylesheet" href="styles/joinForm.css">
 </head>
 
 <body>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="nav-right">
-                <button class="join-btn">JOIN US!</button>
+                <button class="join-btn" onclick="openJoinForm()">JOIN US!</button>
                 <div class="cart-icon">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
@@ -108,6 +108,27 @@
         </div>
     </footer>
 
+    <!-- Formulario Join Us -->
+    <div class="form-container" style="display: none;">
+        <div class="form-content">
+            <div class="kt8-logo">
+                <img src="assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <h2>Log In</h2>
+            <form id="joinForm">
+                <div class="form-group">
+                    <label for="name">Enter your email and we'll send you a code</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="name"> Privacy Policy...</label>
+                </div>
+                <button type="submit" class="submit-btn">CONTINUE</button>
+            </form>
+            <button class="close-btn" onclick="closeForm()">×</button>
+        </div>
+    </div>
+
     <script>
         function toggleDarkMode() {
             const themeLink = document.getElementById('theme-style');
@@ -143,6 +164,30 @@
             logoImg.src = 'assets/zomboyImg/zomboyLogo_2.png';
             darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
         }
+
+        // Funciones para el formulario
+        function openJoinForm() {
+            document.querySelector('.form-container').style.display = 'flex';
+        }
+
+        function closeForm() {
+            document.querySelector('.form-container').style.display = 'none';
+        }
+
+        // Manejar el envío del formulario
+        document.getElementById('joinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+            
+            alert('¡Registro exitoso!');
+            closeForm();
+        });
     </script>
     <script src="scripts/currency.js"></script>
     <script src="scripts/quickView.js"></script>
