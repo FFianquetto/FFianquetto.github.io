@@ -641,6 +641,10 @@ body {
     color: #f91616db !important;
 }
 
+.nav-links a[href="pages/sale.html"] {
+    color: #f91616db !important;
+}
+
 .currency-selector {
     margin-right: 10px;
 }

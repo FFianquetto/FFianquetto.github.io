@@ -1,69 +1,9 @@
 // Variable para almacenar todos los productos
-let todosLosProductos = [];
-
-// Función para cargar los productos desde el archivo JSON
-async function cargarProductos()
-{
-    try {
-        const response = await fetch('scripts/products.json');
-        const data = await response.json();
-        todosLosProductos = data.productos.map(producto => {
-            // Asegurar que la ruta de la imagen sea correcta
-            let imagenAjustada = producto.imagen;
-            if (!imagenAjustada.startsWith('../assets/')) {
-                imagenAjustada = `../assets/${imagenAjustada}`;
-            }
-            return {
-                ...producto,
-                imagen: imagenAjustada
-            };
-        });
-    } catch (error) {
-        console.error('Error al cargar los productos:', error);
-        // Si hay un error, intentamos obtener los productos de la página actual
-        todosLosProductos = obtenerProductosDePagina();
-    }
-}
-
-// Función para obtener productos de la página actual (como respaldo)
-function obtenerProductosDePagina() {
-    const productos = [];
-    // Buscar todos los contenedores de productos
-    const productContainers = document.querySelectorAll('.product-image-container');
-    
-    productContainers.forEach(container => {
-        // Obtener la imagen principal
-        const imagenElement = container.querySelector('.product-image');
-        const imagenPrincipal = imagenElement.getAttribute('src');
-        
-        // Obtener el título y precio del onclick
-        const onclickValue = imagenElement.getAttribute('onclick');
-        const match = onclickValue.match(/openQuickView\('([^']+)',\s*'([^']+)',\s*'([^']+)'\)/);
-        
-        if (match) {
-            const [_, imagen, titulo, precio] = match;
-            
-            console.log('Producto encontrado:', { 
-                titulo, 
-                precio, 
-                imagenPrincipal 
-            });
-            
-            productos.push({
-                titulo,
-                precio,
-                imagen: imagenPrincipal
-            });
-        }
-    });
-    
-    return productos;
-}
+let todosLosProductos = productData.productos;
 
 // Función para realizar la búsqueda
 function buscarProductos(terminoBusqueda) {
     const termino = terminoBusqueda.toLowerCase();
-    
     return todosLosProductos.filter(producto => 
         producto.titulo.toLowerCase().includes(termino)
     );
@@ -78,21 +18,14 @@ function mostrarResultados(resultados) {
         contenedorResultados.innerHTML = '<p class="no-resultados">No se encontraron productos</p>';
     } else {
         const listaProductos = resultados.map(producto => {
-            // Usar la imagen principal del producto
-            const imagenAjustada = producto.imagen;
-            
-            // Crear una imagen temporal para obtener sus dimensiones
-            const img = new Image();
-            img.src = imagenAjustada;
-            
-            // Escapar las comillas y otros caracteres especiales
-            const tituloEscapado = producto.titulo.replace(/'/g, "\\'").replace(/"/g, '\\"');
-            const precioEscapado = producto.precio.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            // Verificar si estamos en la página principal o en una subpágina
+            const esPaginaPrincipal = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+            const rutaImagen = esPaginaPrincipal ? producto.imagen : `../${producto.imagen}`;
             
             return `
-                <div class="producto-resultado" onclick="openQuickView('${imagenAjustada}', '${tituloEscapado}', '${precioEscapado}')">
+                <div class="producto-resultado" onclick="openQuickView('${rutaImagen}', '${producto.titulo.replace(/'/g, "\\'")}', '${producto.precio}')">
                     <div class="producto-imagen">
-                        <img src="${imagenAjustada}" alt="${producto.titulo}" loading="lazy" style="width: 66px; height: 66px; object-fit: contain;">
+                        <img src="${rutaImagen}" alt="${producto.titulo}" loading="lazy" style="width: 66px; height: 66px; object-fit: contain;">
                     </div>
                     <div class="producto-info">
                         <h3>${producto.titulo}</h3>
@@ -117,10 +50,7 @@ function mostrarResultados(resultados) {
 }
 
 // Agregar el evento de búsqueda
-document.addEventListener('DOMContentLoaded', async () => {
-    // Cargar los productos al iniciar la página
-    await cargarProductos();
-    
+document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.querySelector('.search-container input');
     let timeoutId;
     

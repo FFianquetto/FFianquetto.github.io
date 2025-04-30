@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZomboyPage</title>
     <script>
-        // Cargar el tema correcto antes de que se muestre la página
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
         const themeLink = document.createElement('link');
         themeLink.rel = 'stylesheet';
@@ -18,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles/search.css">
     <link rel="stylesheet" href="styles/joinForm.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 </head>
 
 <body>
@@ -43,6 +44,11 @@
                     <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
+                <a href="pages/sale.html">
+                    COMING SOON
+                    <span class="brain-emoji">🧠</span>
+                    <div class="nav-indicator"></div>
+                </a>
                 <a href="pages/giftCard.html">
                     GIFTCARD
                     <span class="brain-emoji">🧠</span>
@@ -58,9 +64,13 @@
             </div>
         </nav>
 
+        <!-- Search Bar -->
         <div class="search-bar">
             <div class="kt8-logo">
                 <img src="assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search for...">
             </div>
             <div class="social-media">
                 <div class="dark-mode-toggle">
@@ -147,7 +157,7 @@
             logoImg.src = isDarkMode ? 'assets/zomboyImg/zomboyLogo_2.png' : 'assets/zomboyImg/zomboyLogo_1.png';
 
             // Cambiar el ícono del botón
-            darkModeBtn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
 
             // Guardar preferencia
             localStorage.setItem('darkMode', isDarkMode);
@@ -162,10 +172,9 @@
             themeLink.href = 'styles/darkMode.css';
             bannerImg.src = 'assets/zomboyImg/banner_2.png';
             logoImg.src = 'assets/zomboyImg/zomboyLogo_2.png';
-            darkModeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
         }
 
-        // Funciones para el formulario
         function openJoinForm() {
             document.querySelector('.form-container').style.display = 'flex';
         }
@@ -174,7 +183,6 @@
             document.querySelector('.form-container').style.display = 'none';
         }
 
-        // Manejar el envío del formulario
         document.getElementById('joinForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const password = document.getElementById('password').value;
@@ -191,6 +199,7 @@
     </script>
     <script src="scripts/currency.js"></script>
     <script src="scripts/quickView.js"></script>
+    <script src="scripts/productData.js"></script>
     <script src="scripts/search.js"></script>
 </body>
 

@@ -21,7 +21,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -127,13 +128,13 @@ html, body {
 .country-selector {
     color: rgba(0, 0, 0, 0.78);
     font-size: 14px;
-        font-family: 'Poppins-Black', sans-serif;
-        font-weight: 300;
-        letter-spacing: 1px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        cursor: pointer;
+    font-family: 'Poppins-Black', sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
 }
 
 .country-selector i {
@@ -147,12 +148,12 @@ html, body {
     border: 2.2px solid #FFFFFF !important;
     padding: 12px 18px;
     font-size: 18px;
-        font-weight: 300;
-        letter-spacing: 1.1px;
-        cursor: pointer;
-        font-family: 'Roboto-Condensed-Bold', sans-serif;
-        backdrop-filter: blur(4px);
-        
+    font-weight: 300;
+    letter-spacing: 1.1px;
+    cursor: pointer;
+    font-family: 'Roboto-Condensed-Bold', sans-serif;
+    backdrop-filter: blur(4px);
+
 }
 
 .cart-icon {
@@ -160,17 +161,17 @@ html, body {
 }
 
 /* Search Bar Styles */
-.search-bar{
-        width: 100%;
-        height: 60px;
-        background-color: #000000 !important;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        border-radius: 0;
-        position: relative;
-    }
+.search-bar {
+    width: 100%;
+    height: 60px;
+    background-color: #000000 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 0;
+    position: relative;
+}
 
 .kt8-logo {
     display: flex;
@@ -241,7 +242,7 @@ html, body {
 
 .info-section h2 {
     font-size: 20px;
-        color: #000000;
+    color: #000000;
     margin-top: 10px;
     margin-left: 50px;
     font-family: 'Roboto-Condensed-Bold', sans-serif;
@@ -413,6 +414,7 @@ html, body {
     letter-spacing: 1.5px;
     font-weight: 300;
 }
+
 /* Price Section Styles */
 .price-section {
     width: 100%;
@@ -601,14 +603,14 @@ html, body {
     color: #000000;
     font-size: 22px;
     margin-left: 2px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        width: 30px;
-        height: 45px;
-        background-color: transparent;
-        border: none;
-        text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 45px;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
 }
 
 .pagination-arrow:hover {
@@ -630,6 +632,10 @@ html, body {
 }
 
 .nav-links a[href="sale.html"] {
+    color: #f91616db !important;
+}
+
+.nav-links a[href="pages/sale.html"] {
     color: #f91616db !important;
 }
 

@@ -12,4 +12,18 @@
 /* Estilos para modo oscuro */
 [data-theme="dark"] .slogan {
     color: #fff;
-} 
+}
+
+.price-box {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.price-box:hover {
+    transform: scale(1.05);
+}
+
+.price-box .product-info {
+    text-align: center;
+}
+
