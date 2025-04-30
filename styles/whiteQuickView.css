@@ -246,14 +246,14 @@ body.light-mode .details li {
 }
 .suggested-products {
     display: flex;
-    gap: 20px;
+    gap: 30px;
 
 }
 .suggested-product {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 330px;
+    width: 300px;
 }
 .suggested-img {
     width: 110%;
