@@ -119,31 +119,8 @@
                 <!-- Sección de productos sugeridos debajo de la imagen -->
                 <div class="suggested-section">
                     <h2 class="suggested-title">YOU MAY ALSO LIKE</h2>
-                    <div class="suggested-products">
-                        <div class="suggested-product"  onclick="openQuickView('../assets/accesoriesImg/hatZ.png', 'ZOMBOUCKET HAT - NEON', '$45.00 USD')">
-                            <img src="../assets/accesoriesImg/hatZ.png" alt="ZOMBUCKET HAT - NEON" class="suggested-img"  loading="lazy">
-                            <div class="suggested-info">
-                                <div class="suggested-name">ZOMBUCKET HAT - NEON</div>
-                                <div class="suggested-price">$45.00 USD</div>
-                            </div>
-                        </div>
-
-                        <div class="suggested-product"  onclick="openQuickView('../assets/apparelImg/whiteteeZ.png', 'BRAIN DEAD HEATHER GRAY TEE', '$30.00 USD')">
-                            <img src="../assets/apparelImg/whiteteeZ.png" alt="Zomboy Tee" class="suggested-img" loading="lazy">
-                            <div class="suggested-info">
-                                <div class="suggested-name">BRAIN DEAD HEATHER GRAY TEE</div>
-                                <div class="suggested-price">$30.00 USD</div>
-                            </div>
-                        </div>
-
-                        <div class="suggested-product" onclick="openQuickView('../assets/accesoriesImg/sandalsZ.png', 'ZOM BOY SLIDES', '$35.00 USD')">
-                            <img src="../assets/accesoriesImg/sandalsZ.png" alt="Zomboy Sandals Quick View" class="suggested-img"loading="lazy">
-                            <div class="suggested-info">
-                                <div class="suggested-name">ZOM BOY SLIDES</div>
-                                <div class="suggested-price">$35.00 USD</div>
-                            </div>
-                        </div>
-
+                    <div class="suggested-products" id="suggested-products">
+                        <!-- Los productos sugeridos se cargarán dinámicamente aquí -->
                     </div>
                 </div>
             </div>
@@ -178,6 +155,7 @@
             const productPrice = document.getElementById('product-price');
             const logoImg = document.getElementById('logo-img');
             const productDescriptions = document.getElementById('product-descriptions');
+            const suggestedProductsContainer = document.getElementById('suggested-products');
 
             // Obtener la información del producto desde localStorage
             const imageSrc = localStorage.getItem('quickViewImage');
@@ -186,10 +164,8 @@
             const desc1 = localStorage.getItem('quickViewDesc1');
             const desc2 = localStorage.getItem('quickViewDesc2');
             const desc3 = localStorage.getItem('quickViewDesc3');
+            const categoria = localStorage.getItem('quickViewCategoria');
 
-            // Actualizar el ícono del botón según el tema
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            
             // Limpiar las descripciones anteriores
             productDescriptions.innerHTML = '';
 
@@ -214,8 +190,6 @@
             if (imageSrc) {
                 // Ajustar la ruta de la imagen si es necesario
                 let rutaImagen = imageSrc;
-                
-                // Si la ruta ya incluye 'assets/', no necesitamos hacer más ajustes
                 if (!rutaImagen.includes('assets/')) {
                     // Extraer el nombre del archivo
                     const fileName = rutaImagen.split('/').pop();
@@ -236,30 +210,45 @@
                 
                 productImage.src = rutaImagen;
                 productImage.alt = title || 'Producto';
-                
-                // Mostrar mensaje en consola para depuración
-                console.log('Ruta de imagen final:', rutaImagen);
             }
 
             if (title) {
                 productTitle.textContent = title;
-                // Actualizar el título de la página
                 document.title = 'KT8 Store - ' + title;
             }
 
             if (price) {
                 productPrice.textContent = price;
-                // Guardar el precio original para la conversión de moneda
                 productPrice.setAttribute('data-original-price', price.replace(/[^0-9.]/g, ''));
             }
 
+            // Cargar productos recomendados
+            if (categoria) {
+                const productosRecomendados = getRecommendedProducts(categoria);
+                suggestedProductsContainer.innerHTML = '';
+                
+                productosRecomendados.forEach(producto => {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'suggested-product';
+                    productDiv.onclick = () => openQuickView(producto.imagen, producto.titulo, producto.precio);
+                    
+                    productDiv.innerHTML = `
+                        <img src="${producto.imagen}" alt="${producto.titulo}" class="suggested-img" loading="lazy">
+                        <div class="suggested-info">
+                            <div class="suggested-name">${producto.titulo}</div>
+                            <div class="suggested-price">${producto.precio}</div>
+                        </div>
+                    `;
+                    
+                    suggestedProductsContainer.appendChild(productDiv);
+                });
+            }
+
             // Actualizar el logo según el tema
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
             if (isDarkMode) {
                 logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
             }
-
-            // Mostrar mensaje en consola para depuración
-            console.log('Producto cargado:', { imageSrc, title, price });
         });
 
         // Funcionalidad para los botones de cantidad
@@ -304,62 +293,62 @@
         // Funcionalidad para el botón de cerrar
         document.querySelector('.quickview-close')?.addEventListener('click', () => 
         {
-
             window.close();
         });
+
         function toggleDarkMode() {
-                const themeLink = document.getElementById('theme-style');
-                const bannerImg = document.querySelector('.banner img');
-                const logoImg = document.querySelector('.logo-section img');
-                const isDarkMode = themeLink.href.includes('lightMode.css');
+            const themeLink = document.getElementById('theme-style');
+            const bannerImg = document.querySelector('.banner img');
+            const logoImg = document.querySelector('.logo-section img');
+            const isDarkMode = themeLink.href.includes('lightMode.css');
 
-                // Cambiar el tema CSS
-                themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+            // Cambiar el tema CSS
+            themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
 
-                // Cambiar el logo
-                logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
+            // Cambiar el logo
+            logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
 
-                // Cambiar el ícono del botón
-                darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
+            // Cambiar el ícono del botón
+            darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
 
-                // Guardar preferencia
-                localStorage.setItem('darkMode', isDarkMode);
-            }
+            // Guardar preferencia
+            localStorage.setItem('darkMode', isDarkMode);
+        }
 
-            if (localStorage.getItem('darkMode') === 'true') {
-                const themeLink = document.getElementById('theme-style');
-                const logoImg = document.querySelector('.logo-section img');
-                themeLink.href = '../styles/darkMode.css';
-                logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
-                darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
-            }
+        if (localStorage.getItem('darkMode') === 'true') {
+            const themeLink = document.getElementById('theme-style');
+            const logoImg = document.querySelector('.logo-section img');
+            themeLink.href = '../styles/darkMode.css';
+            logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+            darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
+        }
 
-            // Función para abrir la vista rápida del producto
-            function openQuickView(imageSrc, productTitle, productPrice) {
-                // Guardar la información del producto en localStorage
-                localStorage.setItem('quickViewImage', imageSrc);
-                localStorage.setItem('quickViewTitle', productTitle);
-                localStorage.setItem('quickViewPrice', productPrice);
+        // Función para abrir la vista rápida del producto
+        function openQuickView(imageSrc, productTitle, productPrice) {
+            // Guardar la información del producto en localStorage
+            localStorage.setItem('quickViewImage', imageSrc);
+            localStorage.setItem('quickViewTitle', productTitle);
+            localStorage.setItem('quickViewPrice', productPrice);
 
-                // Redirigir a la página de quickView
-                window.location.href = 'quickView.html';
-            }
+            // Redirigir a la página de quickView
+            window.location.href = 'quickView.html';
+        }
 
-            // Funciones para el formulario
-            function openJoinForm() {
-                document.querySelector('.form-container').style.display = 'flex';
-            }
+        // Funciones para el formulario
+        function openJoinForm() {
+            document.querySelector('.form-container').style.display = 'flex';
+        }
 
-            function closeForm() {
-                document.querySelector('.form-container').style.display = 'none';
-            }
+        function closeForm() {
+            document.querySelector('.form-container').style.display = 'none';
+        }
 
-            // Manejar el envío del formulario
-            document.getElementById('joinForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-                alert('¡Registro exitoso!');
-                closeForm();
-            });
+        // Manejar el envío del formulario
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('¡Registro exitoso!');
+            closeForm();
+        });
     </script>
     <script src="../scripts/currency.js"></script>
     <script src="../scripts/quickView.js"></script>
