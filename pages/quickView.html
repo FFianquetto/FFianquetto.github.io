@@ -43,17 +43,14 @@
             <div class="nav-links">
                 <a href="../index.html">
                     HOME
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="apparel.html" class="active">
                     APPAREL
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="accesories.html">
                     ACCESORIES
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="sale.html">
@@ -61,7 +58,6 @@
                 </a>
                 <a href="giftCard.html">
                     GIFTCARD
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
             </div>
@@ -114,10 +110,26 @@
 
                 <div class="details">
                     <h3>DETAILS</h3>
-                    <ul>
-                        <li>75% cotton, 25% polyester</li>
-                        <li>Heavy Weight</li>
+                    <ul id="product-descriptions">
+                        <!-- Las descripciones se cargarán dinámicamente aquí -->
                     </ul>
+                </div>
+
+                <!-- Sección de productos sugeridos debajo de la imagen -->
+                <div class="suggested-section">
+                    <h2 class="suggested-title">YOU MAY ALSO LIKE</h2>
+                    <div class="suggested-products">
+                        <div class="suggested-product" style="cursor:pointer" onclick="openQuickView('../assets/accesoriesImg/hatZ.png', 'ZOMBUCKET HAT - NEON', '$45.00 USD')">
+                            <img src="../assets/accesoriesImg/hatZ.png" alt="ZOMBUCKET HAT - NEON" class="suggested-img">
+                            <div class="suggested-name">ZOMBUCKET HAT - NEON</div>
+                            <div class="suggested-price">$45.00 USD</div>
+                        </div>
+                        <div class="suggested-product" style="cursor:pointer" onclick="openQuickView('../assets/apparelImg/jerseyZ.png', 'ZOMBOY KIDS CHROME JERSEY', '$90.00 USD')">
+                            <img src="../assets/apparelImg/jerseyZ.png" alt="ZOMBOY KIDS CHROME JERSEY" class="suggested-img">
+                            <div class="suggested-name">ZOMBOY KIDS CHROME JERSEY</div>
+                            <div class="suggested-price">$90.00 USD</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -130,15 +142,38 @@
             const productTitle = document.getElementById('product-title');
             const productPrice = document.getElementById('product-price');
             const logoImg = document.getElementById('logo-img');
+            const productDescriptions = document.getElementById('product-descriptions');
 
             // Obtener la información del producto desde localStorage
             const imageSrc = localStorage.getItem('quickViewImage');
             const title = localStorage.getItem('quickViewTitle');
             const price = localStorage.getItem('quickViewPrice');
+            const desc1 = localStorage.getItem('quickViewDesc1');
+            const desc2 = localStorage.getItem('quickViewDesc2');
+            const desc3 = localStorage.getItem('quickViewDesc3');
 
             // Actualizar el ícono del botón según el tema
             const isDarkMode = localStorage.getItem('darkMode') === 'true';
             
+            // Limpiar las descripciones anteriores
+            productDescriptions.innerHTML = '';
+
+            // Agregar las nuevas descripciones si existen
+            if (desc1) {
+                const li1 = document.createElement('li');
+                li1.textContent = desc1;
+                productDescriptions.appendChild(li1);
+            }
+            if (desc2) {
+                const li2 = document.createElement('li');
+                li2.textContent = desc2;
+                productDescriptions.appendChild(li2);
+            }
+            if (desc3) {
+                const li3 = document.createElement('li');
+                li3.textContent = desc3;
+                productDescriptions.appendChild(li3);
+            }
 
             // Actualizar la información del producto
             if (imageSrc) {
@@ -211,9 +246,24 @@
         // Funcionalidad para los botones de talla
         document.querySelectorAll('.size-button').forEach(button => {
             button.addEventListener('click', function () {
-                document.querySelectorAll('.size-button').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+                // Guardar la talla seleccionada en localStorage
+                localStorage.setItem('selectedSize', this.textContent);
+                
+                // Recargar la página
+                window.location.reload();
             });
+        });
+
+        // Al cargar la página, marcar la talla seleccionada si existe
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedSize = localStorage.getItem('selectedSize');
+            if (selectedSize) {
+                document.querySelectorAll('.size-button').forEach(button => {
+                    if (button.textContent === selectedSize) {
+                        button.classList.add('active');
+                    }
+                });
+            }
         });
 
         // Funcionalidad para el botón de cerrar
