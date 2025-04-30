@@ -1,23 +1,43 @@
 function openQuickView(imageSrc, productTitle, productPrice) {
     const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
 
-    // Ajustar la ruta de la imagen si es necesario
-    let imagenAjustada = imageSrc;
-    if (!imageSrc.includes('assets/')) {
-        // Extraer el nombre del archivo
-        const fileName = imageSrc.split('/').pop();
-        
-        // Determinar la carpeta según el nombre del archivo
-        if (fileName.startsWith('Z')) {
-            imagenAjustada = '../assets/apparelImg/' + fileName;
-        } else if (fileName.startsWith('Z1')) {
-            imagenAjustada = '../assets/accesoriesImg/' + fileName;
-        } else if (fileName.startsWith('S')) {
-            imagenAjustada = '../assets/saleImg/' + fileName;
-        } else if (fileName.includes('giftCard')) {
-            imagenAjustada = '../assets/giftCard/' + fileName;
+    // Ajustar la ruta de la imagen según la página
+    let imagenAjustada;
+    if (isMainPage) {
+        // Lógica para index.html
+        if (!imageSrc.includes('../assets/')) {
+            const fileName = imageSrc.split('/').pop();
+            if (fileName.startsWith('Z')) {
+                imagenAjustada = '../assets/apparelImg/' + fileName;
+            } else if (fileName.startsWith('Z1')) {
+                imagenAjustada = '../assets/accesoriesImg/' + fileName;
+            } else if (fileName.startsWith('S')) {
+                imagenAjustada = '../assets/saleImg/' + fileName;
+            } else if (fileName.includes('giftCard')) {
+                imagenAjustada = '../assets/giftCard/' + fileName;
+            } else {
+                imagenAjustada = '../assets/apparelImg/' + fileName;
+            }
         } else {
-            imagenAjustada = '../assets/apparelImg/' + fileName;
+            imagenAjustada = imageSrc;
+        }
+    } else {
+        // Lógica para otras páginas
+        if (!imageSrc.includes('assets/')) {
+            const fileName = imageSrc.split('/').pop();
+            if (fileName.startsWith('Z')) {
+                imagenAjustada = 'assets/apparelImg/' + fileName;
+            } else if (fileName.startsWith('Z1')) {
+                imagenAjustada = 'assets/accesoriesImg/' + fileName;
+            } else if (fileName.startsWith('S')) {
+                imagenAjustada = 'assets/saleImg/' + fileName;
+            } else if (fileName.includes('giftCard')) {
+                imagenAjustada = 'assets/giftCard/' + fileName;
+            } else {
+                imagenAjustada = 'assets/apparelImg/' + fileName;
+            }
+        } else {
+            imagenAjustada = imageSrc;
         }
     }
     

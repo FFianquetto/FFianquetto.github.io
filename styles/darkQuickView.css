@@ -209,10 +209,12 @@
 }
 
 .details h3 {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
 .details ul {
+    font-size: 17.5px;
     list-style-type: disc;
     padding-left: 20px;
 }
@@ -254,7 +256,7 @@ body.dark-mode .add-to-cart {
 body.dark-mode .product-title,
 body.dark-mode .product-price,
 body.dark-mode .quantity-label,
-body.dark-mode .details h3,
+body.dark-mode .details h2,
 body.dark-mode .details li {
     color: #fff;
 }
