@@ -3,9 +3,11 @@ function openQuickView(imageSrc, productTitle, productPrice) {
 
     // Ajustar la ruta de la imagen según la página
     let imagenAjustada;
-    if (isMainPage) {
+    if (isMainPage)
+    {
         // Lógica para index.html
-        if (!imageSrc.includes('../assets/')) {
+        if (!imageSrc.includes('../assets/'))
+        {
             const fileName = imageSrc.split('/').pop();
             if (fileName.startsWith('Z')) {
                 imagenAjustada = '../assets/apparelImg/' + fileName;
@@ -16,12 +18,15 @@ function openQuickView(imageSrc, productTitle, productPrice) {
             } else if (fileName.includes('giftCard')) {
                 imagenAjustada = '../assets/giftCard/' + fileName;
             } else {
-                imagenAjustada = '../assets/apparelImg/' + fileName;
+                imagenAjustada = '../assets/giftCard/' + fileName;
+
             }
         } else {
             imagenAjustada = imageSrc;
         }
-    } else {
+    }
+    else
+    {
         // Lógica para otras páginas
         if (!imageSrc.includes('assets/')) {
             const fileName = imageSrc.split('/').pop();

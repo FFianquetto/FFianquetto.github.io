@@ -1,6 +1,7 @@
 .language-dropdown {
     position: relative;
     display: inline-block;
+    z-index: 1;
 }
 
 .language-menu {
@@ -11,7 +12,7 @@
     border: 1px solid #333333;
     border-radius: 4px;
     padding: 8px;
-    z-index: 1000;
+    z-index: 1;
     min-width: 120px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

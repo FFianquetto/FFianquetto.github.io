@@ -6,15 +6,24 @@ function changeLanguage(lang) {
     updateTexts();
 }
 
-function updateTexts() {
+function updateTexts()
+{
     const lang = translations[currentLanguage];
     
-    // Actualizar textos de navegación
-    document.querySelector('.nav-links a:nth-child(1)').textContent = lang.home;
-    document.querySelector('.nav-links a:nth-child(2)').textContent = lang.apparel;
-    document.querySelector('.nav-links a:nth-child(3)').textContent = lang.accessories;
-    document.querySelector('.nav-links a:nth-child(4)').textContent = lang.comingSoon;
-    document.querySelector('.nav-links a:nth-child(5)').textContent = lang.giftCard;
+    // Actualizar textos de navegación preservando el emoji del cerebro
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach((link, index) => {
+        const brainEmoji = link.querySelector('.brain-emoji');
+        const navIndicator = link.querySelector('.nav-indicator');
+        const text = [lang.home, lang.apparel, lang.accessories, lang.comingSoon, lang.giftCard][index];
+        
+        if (brainEmoji) {
+            link.innerHTML = `${text} <span class="brain-emoji">🧠</span> <div class="nav-indicator"></div>`;
+        } else {
+            link.innerHTML = `${text} <div class="nav-indicator"></div>`;
+        }
+    });
+
     // Actualizar botones
     document.querySelector('.language-dropdown button').textContent = lang.language;
     document.querySelector('.nav-right button.join-btn:not(.language-dropdown button)').textContent = lang.idioma;
@@ -44,6 +53,7 @@ function updateTexts() {
 }
 
 // Inicializar textos al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () =>
+{
     updateTexts();
 }); 

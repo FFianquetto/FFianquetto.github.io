@@ -30,29 +30,25 @@
             </div>
 
             <div class="nav-links">
-                <a href="#" class="active">
+                <a href="index.html" class="active">
                     HOME
                     <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="pages/apparel.html">
                     APPAREL
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="pages/accesories.html">
                     ACCESORIES
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="pages/sale.html">
                     COMING SOON
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="pages/giftCard.html">
                     GIFTCARD
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
             </div>
@@ -151,6 +147,20 @@
     </div>
 
     <script>
+        const BRAIN_EMOJI = '🧠';
+        
+        // Asegurar que el emoji del cerebro se muestre en el enlace activo
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeLink = document.querySelector('.nav-links a.active');
+            if (activeLink) {
+                const brainEmoji = activeLink.querySelector('.brain-emoji');
+                if (brainEmoji) {
+                    brainEmoji.textContent = BRAIN_EMOJI;
+                    brainEmoji.style.display = 'block';
+                }
+            }
+        });
+
         function toggleDarkMode() {
             const themeLink = document.getElementById('theme-style');
             const bannerImg = document.querySelector('.banner img');
@@ -194,16 +204,16 @@
             document.querySelector('.form-container').style.display = 'none';
         }
 
-        document.getElementById('joinForm').addEventListener('submit', function(e) {
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
+
             if (password !== confirmPassword) {
                 alert('Las contraseñas no coinciden');
                 return;
             }
-            
+
             alert('¡Registro exitoso!');
             closeForm();
         });
@@ -224,7 +234,7 @@
         document.addEventListener('click', (event) => {
             const languageMenu = document.querySelector('.language-menu');
             const languageButton = document.querySelector('.language-dropdown button');
-            
+
             if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
                 languageMenu.style.display = 'none';
             }
