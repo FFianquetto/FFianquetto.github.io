@@ -145,11 +145,11 @@ body {
 .join-btn {
     background-color: #ffffff !important;
     color: #000000 !important;
-    border: 2.2px solid #000000 !important;
+    border: 2px solid #000000 !important;
     padding: 12px 18px;
     font-size: 18px;
-    font-weight: 300;
-    letter-spacing: 1.1px;
+    font-weight: 300px;
+    letter-spacing: 1.2px;
     cursor: pointer;
     font-family: 'Roboto-Condensed-Bold', sans-serif;
     backdrop-filter: blur(4px);
