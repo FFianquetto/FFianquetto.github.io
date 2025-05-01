@@ -1,54 +1,25 @@
 function openQuickView(imageSrc, productTitle, productPrice) {
-    const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
-
-    // Ajustar la ruta de la imagen según la página
-    let imagenAjustada;
-    if (isMainPage)
-    {
-        // Lógica para index.html
-        if (!imageSrc.includes('../assets/'))
-        {
-            const fileName = imageSrc.split('/').pop();
-            if (fileName.startsWith('Z')) {
-                imagenAjustada = '../assets/apparelImg/' + fileName;
-            } else if (fileName.startsWith('Z1')) {
-                imagenAjustada = '../assets/accesoriesImg/' + fileName;
-            } else if (fileName.startsWith('S')) {
-                imagenAjustada = '../assets/saleImg/' + fileName;
-            } else if (fileName.includes('giftCard')) {
-                imagenAjustada = '../assets/giftCard/' + fileName;
-            } else {
-                imagenAjustada = '../assets/giftCard/' + fileName;
-
-            }
+    // Ajustar la ruta de la imagen según el prefijo del archivo
+    let imagenAjustada = imageSrc;
+    if (!imagenAjustada.includes('assets/')) {
+        const fileName = imagenAjustada.split('/').pop();
+        if (fileName.startsWith('Z')) {
+            imagenAjustada = '../assets/apparelImg/' + fileName;
+        } else if (fileName.startsWith('Z1')) {
+            imagenAjustada = '../assets/accesoriesImg/' + fileName;
+        } else if (fileName.startsWith('S')) {
+            imagenAjustada = '../assets/saleImg/' + fileName;
+        } else if (fileName.includes('giftCard')) {
+            imagenAjustada = '../assets/giftCard/' + fileName;
         } else {
-            imagenAjustada = imageSrc;
-        }
-    }
-    else
-    {
-        // Lógica para otras páginas
-        if (!imageSrc.includes('assets/')) {
-            const fileName = imageSrc.split('/').pop();
-            if (fileName.startsWith('Z')) {
-                imagenAjustada = 'assets/apparelImg/' + fileName;
-            } else if (fileName.startsWith('Z1')) {
-                imagenAjustada = 'assets/accesoriesImg/' + fileName;
-            } else if (fileName.startsWith('S')) {
-                imagenAjustada = 'assets/saleImg/' + fileName;
-            } else if (fileName.includes('giftCard')) {
-                imagenAjustada = 'assets/giftCard/' + fileName;
-            } else {
-                imagenAjustada = 'assets/apparelImg/' + fileName;
-            }
-        } else {
-            imagenAjustada = imageSrc;
+            imagenAjustada = '../assets/apparelImg/' + fileName;
         }
     }
     
     // Buscar el producto en productData
     const producto = productData.productos.find(p => p.titulo === productTitle);
     
+    // Guardar la información en localStorage
     localStorage.setItem('quickViewImage', imagenAjustada);
     localStorage.setItem('quickViewTitle', productTitle);
     localStorage.setItem('quickViewPrice', productPrice);
@@ -60,57 +31,69 @@ function openQuickView(imageSrc, productTitle, productPrice) {
         localStorage.setItem('quickViewCategoria', producto.categoria);
     }
     
-    let quickViewUrl = isMainPage ? 'pages/quickView.html' : 'quickView.html';
-
-    window.location.href = quickViewUrl;
+    // Redirigir a la página de quickView
+    window.location.href = 'quickView.html';
 }
 
 // Función para obtener productos recomendados de la misma categoría
 function getRecommendedProducts(categoria) {
-    // Obtener el título del producto actual
-    const productoActual = localStorage.getItem('quickViewTitle');
-    
-    // Filtrar productos de la misma categoría excluyendo el producto actual
-    const productosCategoria = productData.productos.filter(p => 
-        p.categoria === categoria && p.titulo !== productoActual
-    );
-    
-    // Seleccionar 3 productos aleatorios
-    const productosAleatorios = [];
-    const indicesUsados = new Set();
-    
-    while (productosAleatorios.length < 3 && productosAleatorios.length < productosCategoria.length) {
-        const indiceAleatorio = Math.floor(Math.random() * productosCategoria.length);
-        if (!indicesUsados.has(indiceAleatorio)) {
-            const producto = productosCategoria[indiceAleatorio];
-            // Ajustar la ruta de la imagen según la categoría
-            let rutaImagen = producto.imagen;
-            
-            // Si la ruta no incluye 'assets/', ajustarla según la categoría
-            if (!rutaImagen.includes('assets/')) {
-                if (categoria === 'apparel') {
-                    rutaImagen = '../assets/apparelImg/' + producto.imagen;
-                } else if (categoria === 'accesories') {
-                    rutaImagen = '../assets/accesoriesImg/' + producto.imagen;
-                } else if (categoria === 'sale') {
-                    rutaImagen = '../assets/saleImg/' + producto.imagen;
-                } else if (categoria === 'giftCard') {
-                    rutaImagen = '../assets/giftCard/' + producto.imagen;
-                }
-            } else {
-                // Si ya incluye 'assets/', asegurarse de que tenga el prefijo '../'
-                if (!rutaImagen.startsWith('../')) {
-                    rutaImagen = '../' + rutaImagen;
-                }
-            }
-            
-            productosAleatorios.push({
-                ...producto,
-                imagen: rutaImagen
-            });
-            indicesUsados.add(indiceAleatorio);
+    try {
+        // Verificar que productData exista
+        if (!productData || !productData.productos) {
+            console.error('productData no está definido');
+            return [];
         }
+
+        // Obtener el título del producto actual
+        const productoActual = localStorage.getItem('quickViewTitle');
+        
+        // Filtrar productos de la misma categoría
+        const productosCategoria = productData.productos.filter(p => 
+            p.categoria === categoria && p.titulo !== productoActual
+        );
+        
+        // Seleccionar 3 productos aleatorios
+        const productosAleatorios = [];
+        const maxProductos = Math.min(3, productosCategoria.length);
+        
+        // Mezclar el array de productos
+        const productosMezclados = [...productosCategoria].sort(() => Math.random() - 0.5);
+        
+        // Tomar los primeros 3 productos
+        for (let i = 0; i < maxProductos; i++) {
+            const producto = productosMezclados[i];
+            if (producto && producto.imagen) {
+                let rutaImagen = producto.imagen;
+                
+                // Asegurarnos de que la ruta sea relativa a la carpeta assets
+                if (!rutaImagen.includes('assets/')) {
+                    const fileName = rutaImagen.split('/').pop();
+                    if (fileName.startsWith('Z')) {
+                        rutaImagen = 'assets/apparelImg/' + fileName;
+                    } else if (fileName.startsWith('Z1')) {
+                        rutaImagen = 'assets/accesoriesImg/' + fileName;
+                    } else if (fileName.startsWith('S')) {
+                        rutaImagen = 'assets/saleImg/' + fileName;
+                    } else if (fileName.includes('giftCard')) {
+                        rutaImagen = 'assets/giftCard/' + fileName;
+                    } else {
+                        rutaImagen = 'assets/apparelImg/' + fileName;
+                    }
+                }
+                
+                // Crear un nuevo objeto con la ruta de imagen corregida
+                const productoConRutaCorregida = {
+                    ...producto,
+                    imagen: rutaImagen
+                };
+                
+                productosAleatorios.push(productoConRutaCorregida);
+            }
+        }
+        
+        return productosAleatorios;
+    } catch (error) {
+        console.error('Error en getRecommendedProducts:', error);
+        return [];
     }
-    
-    return productosAleatorios;
 } 

@@ -18,9 +18,7 @@ function mostrarResultados(resultados) {
         contenedorResultados.innerHTML = '<p class="no-resultados">No se encontraron productos</p>';
     } else {
         const listaProductos = resultados.map(producto => {
-            // Verificar si estamos en la página principal o en una subpágina
-            const esPaginaPrincipal = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
-            const rutaImagen = esPaginaPrincipal ? producto.imagen : `../${producto.imagen}`;
+            const rutaImagen = `../${producto.imagen}`;
             
             return `
                 <div class="producto-resultado" onclick="openQuickView('${rutaImagen}', '${producto.titulo.replace(/'/g, "\\'")}', '${producto.precio}')">

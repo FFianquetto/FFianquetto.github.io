@@ -11,13 +11,13 @@
         const themeLink = document.createElement('link');
         themeLink.rel = 'stylesheet';
         themeLink.id = 'theme-style';
-        themeLink.href = isDarkMode ? 'styles/darkMode.css' : 'styles/lightMode.css';
+        themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
         document.head.appendChild(themeLink);
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/search.css">
-    <link rel="stylesheet" href="styles/joinForm.css">
-    <link rel="stylesheet" href="styles/language.css">
+    <link rel="stylesheet" href="../styles/search.css">
+    <link rel="stylesheet" href="../styles/joinForm.css">
+    <link rel="stylesheet" href="../styles/language.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
@@ -26,7 +26,7 @@
     <div class="container">
         <nav class="navbar">
             <div class="logo-section">
-                <img src="assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo" id="logo-img">
             </div>
 
             <div class="nav-links">
@@ -35,19 +35,19 @@
                     <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="pages/apparel.html">
+                <a href="apparel.html">
                     APPAREL
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="pages/accesories.html">
+                <a href="accesories.html">
                     ACCESORIES
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="pages/sale.html">
+                <a href="sale.html">
                     COMING SOON
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="pages/giftCard.html">
+                <a href="giftCard.html">
                     GIFTCARD
                     <div class="nav-indicator"></div>
                 </a>
@@ -74,7 +74,7 @@
         <!-- Search Bar -->
         <div class="search-bar">
             <div class="kt8-logo">
-                <img src="assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
             </div>
             <div class="search-container">
                 <input type="text" placeholder="Search for...">
@@ -95,7 +95,7 @@
         </div>
 
         <div class="banner">
-            <img src="assets/zomboyImg/banner_1.png" alt="Banner">
+            <img src="../assets/zomboyImg/banner_1.png" alt="Banner">
         </div>
 
         <div class="info-section">
@@ -129,7 +129,7 @@
     <div class="form-container" style="display: none;">
         <div class="form-content">
             <div class="kt8-logo">
-                <img src="assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
             </div>
             <h2>Log In</h2>
             <form id="joinForm">
@@ -169,13 +169,13 @@
             const isDarkMode = themeLink.href.includes('lightMode.css');
 
             // Cambiar el tema CSS
-            themeLink.href = isDarkMode ? 'styles/darkMode.css' : 'styles/lightMode.css';
+            themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
 
             // Cambiar la imagen del banner
-            bannerImg.src = isDarkMode ? 'assets/zomboyImg/banner_2.png' : 'assets/zomboyImg/banner_1.png';
+            bannerImg.src = isDarkMode ? '../assets/zomboyImg/banner_2.png' : '../assets/zomboyImg/banner_1.png';
 
             // Cambiar el logo
-            logoImg.src = isDarkMode ? 'assets/zomboyImg/zomboyLogo_2.png' : 'assets/zomboyImg/zomboyLogo_1.png';
+            logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
 
             // Cambiar el ícono del botón
             darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
@@ -190,9 +190,9 @@
             const bannerImg = document.querySelector('.banner img');
             const logoImg = document.querySelector('.logo-section img');
             const darkModeBtn = document.getElementById('darkModeBtn');
-            themeLink.href = 'styles/darkMode.css';
-            bannerImg.src = 'assets/zomboyImg/banner_2.png';
-            logoImg.src = 'assets/zomboyImg/zomboyLogo_2.png';
+            themeLink.href = '../styles/darkMode.css';
+            bannerImg.src = '../assets/zomboyImg/banner_2.png';
+            logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
             darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
         }
 
@@ -218,12 +218,12 @@
             closeForm();
         });
     </script>
-    <script src="scripts/currency.js"></script>
-    <script src="scripts/quickView.js"></script>
-    <script src="scripts/productData.js"></script>
-    <script src="scripts/search.js"></script>
-    <script src="scripts/translations.js"></script>
-    <script src="scripts/language.js"></script>
+    <script src="../scripts/currency.js"></script>
+    <script src="../scripts/quickView.js"></script>
+    <script src="../scripts/productData.js"></script>
+    <script src="../scripts/search.js"></script>
+    <script src="../scripts/translations.js"></script>
+    <script src="../scripts/language.js"></script>
     <script>
         function toggleLanguageMenu() {
             const menu = document.querySelector('.language-menu');

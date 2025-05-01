@@ -43,7 +43,7 @@
             </div>
 
             <div class="nav-links">
-                <a href="../index.html">
+                <a href="index.html">
                     HOME
                     <div class="nav-indicator"></div>
                 </a>
@@ -241,13 +241,35 @@
                 const productosRecomendados = getRecommendedProducts(categoria);
                 suggestedProductsContainer.innerHTML = '';
                 
-                productosRecomendados.forEach(producto => {
+                productosRecomendados.forEach(producto => 
+                {
                     const productDiv = document.createElement('div');
                     productDiv.className = 'suggested-product';
-                    productDiv.onclick = () => openQuickView(producto.imagen, producto.titulo, producto.precio);
+                    
+                    // Usar la ruta de imagen directamente del producto recomendado
+                    const rutaImagen = producto.imagen;
+                    
+                    productDiv.onclick = () => {
+                        // Guardar la información del nuevo producto en localStorage
+                        localStorage.setItem('quickViewImage', rutaImagen);
+                        localStorage.setItem('quickViewTitle', producto.titulo);
+                        localStorage.setItem('quickViewPrice', producto.precio);
+                        
+                        // Buscar el producto en productData para obtener las descripciones
+                        const productoCompleto = productData.productos.find(p => p.titulo === producto.titulo);
+                        if (productoCompleto) {
+                            localStorage.setItem('quickViewDesc1', productoCompleto.descripcion1);
+                            localStorage.setItem('quickViewDesc2', productoCompleto.descripcion2);
+                            localStorage.setItem('quickViewDesc3', productoCompleto.descripcion3);
+                            localStorage.setItem('quickViewCategoria', productoCompleto.categoria);
+                        }
+                        
+                        // Redirigir a quickView.html para mostrar el producto desde arriba
+                        window.location.href = 'quickView.html';
+                    };
                     
                     productDiv.innerHTML = `
-                        <img src="${producto.imagen}" alt="${producto.titulo}" class="suggested-img" loading="lazy">
+                        <img src="../${rutaImagen}" alt="${producto.titulo}" class="suggested-img" loading="lazy">
                         <div class="suggested-info">
                             <div class="suggested-name">${producto.titulo}</div>
                             <div class="suggested-price">${producto.precio}</div>

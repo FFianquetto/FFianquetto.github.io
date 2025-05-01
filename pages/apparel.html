@@ -12,13 +12,19 @@
         themeLink.id = 'theme-style';
         themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
         document.head.appendChild(themeLink);
+
+        // Agregar clase dark-mode al body si está en modo oscuro
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.add('light-mode');
+        }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../styles/search.css">
     <link rel="stylesheet" href="../styles/joinForm.css">
     <link rel="stylesheet" href="../styles/language.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
 </head>
 
 <body>
@@ -26,13 +32,12 @@
         <!-- Navbar -->
         <nav class="navbar">
             <div class="logo-section">
-                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo" id="logo-img">
             </div>
 
             <div class="nav-links">
-                <a href="../index.html">
+                <a href="index.html">
                     HOME
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="apparel.html" class="active">
@@ -42,7 +47,6 @@
                 </a>
                 <a href="accesories.html">
                     ACCESORIES
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="sale.html">
@@ -50,7 +54,6 @@
                 </a>
                 <a href="giftCard.html">
                     GIFTCARD
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
             </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT8 Store - Product</title>
+    <title>KT8 Store - Shopping Cart</title>
     <script>
         // Cargar el tema correcto antes de que se muestre la página
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -29,7 +29,9 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
+    <link rel="stylesheet" href="../styles/search.css">
+    <link rel="stylesheet" href="../styles/joinForm.css">
+    <link rel="stylesheet" href="../styles/language.css">
 </head>
 
 <body>
@@ -41,19 +43,16 @@
             </div>
 
             <div class="nav-links">
-                <a href="../index.html">
+                <a href="index.html">
                     HOME
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
-                <a href="apparel.html" class="active">
+                <a href="apparel.html">
                     APPAREL
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="accesories.html">
                     ACCESORIES
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
                 <a href="sale.html">
@@ -61,7 +60,6 @@
                 </a>
                 <a href="giftCard.html">
                     GIFTCARD
-                    <span class="brain-emoji">🧠</span>
                     <div class="nav-indicator"></div>
                 </a>
             </div>
@@ -222,6 +220,10 @@
         });
     </script>
     <script src="../scripts/currency.js"></script>
+    <script src="../scripts/quickView.js"></script>
+    <script src="../scripts/productData.js"></script>
+    <script src="../scripts/translations.js"></script>
+    <script src="../scripts/language.js"></script>
     <footer class="footer">
         <div class="footer-text">© 2025, KT8 Merch Co All rights reserved.</div>
         <div class="payment-methods">
