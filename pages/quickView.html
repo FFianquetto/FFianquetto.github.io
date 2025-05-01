@@ -251,7 +251,7 @@
                     
                     productDiv.onclick = () => {
                         // Guardar la información del nuevo producto en localStorage
-                        localStorage.setItem('quickViewImage', rutaImagen);
+                        localStorage.setItem('quickViewImage', `../${rutaImagen}`);
                         localStorage.setItem('quickViewTitle', producto.titulo);
                         localStorage.setItem('quickViewPrice', producto.precio);
                         
