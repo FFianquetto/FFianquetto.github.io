@@ -31,6 +31,41 @@
     <link rel="stylesheet" href="../styles/joinForm.css">
     <link rel="stylesheet" href="../styles/language.css">
     <link rel="stylesheet" href="../styles/quickView.css">
+    <style>
+        /* Estilos para la animación del carrito */
+        @keyframes cartScale {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.8); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.8); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-icon {
+            display: inline-block;
+            position: relative;
+        }
+
+        .cart-icon.animate {
+            animation: cartScale 1.8s ease-in-out;
+        }
+
+        /* Estilos para el ícono del cerebro */
+        .cart-brain {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 16px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .cart-brain.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
 </head>
 
 <body>
@@ -210,7 +245,29 @@
             }
         }
 
-        // Modifica el evento de añadir al carrito para mostrar el mensaje
+        // Función para animar el carrito
+        function animateCart() {
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.classList.add('animate');
+            
+            // Remover la clase de animación después de que termine
+            setTimeout(() => {
+                cartIcon.classList.remove('animate');
+            }, 1800);
+        }
+
+        // Función para actualizar el estado del cerebro
+        function updateCartBrain() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartBrain = document.querySelector('.cart-brain');
+            
+            if (cart.length > 0) {
+                cartBrain.classList.add('show');
+            }
+            // Ya no removemos la clase show aquí, solo se removerá al vaciar el carrito
+        }
+
+        // Modificar el evento de añadir al carrito para incluir la animación y actualizar el cerebro
         document.querySelector('.add-to-cart').addEventListener('click', () => {
             const image = localStorage.getItem('quickViewImage');
             const title = localStorage.getItem('quickViewTitle');
@@ -219,19 +276,28 @@
             const quantity = parseInt(document.querySelector('.quantity-display').textContent);
             let productId = localStorage.getItem('quickViewId');
             if (!productId && title) {
-                // Generar un id a partir del título en inglés, mayúsculas y guiones bajos
                 productId = title.trim().toUpperCase().replace(/\s+/g, '_');
                 localStorage.setItem('quickViewId', productId);
             }
             const product = { id: productId, image, title, price, size, quantity };
-            // Obtener el carrito actual
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            // Agregar el nuevo producto
             cart.push(product);
-            // Guardar el carrito actualizado
             localStorage.setItem('cart', JSON.stringify(cart));
-            // Mostrar mensaje de éxito
-            showCartSuccessMessage();
+            
+            // Animar el carrito y actualizar el cerebro
+            animateCart();
+            updateCartBrain();
+        });
+
+        // Agregar el cerebro al carrito cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartBrain = document.createElement('i');
+            cartBrain.className = 'cart-brain fas fa-brain';
+            cartIcon.appendChild(cartBrain);
+            
+            // Actualizar el estado inicial del cerebro
+            updateCartBrain();
         });
 
         //Funciones del menu hamburguesa

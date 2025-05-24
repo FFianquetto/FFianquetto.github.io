@@ -121,7 +121,7 @@
         <br /><br /><br />
 
         <div class="product-container">
-            <button class="limpiar" onclick="localStorage.removeItem('cart'); location.reload();" data-translate="empty-cart">VACIAR CARRITO</button>
+            <button class="limpiar" onclick="vaciarCarrito()" data-translate="empty-cart">VACIAR CARRITO</button>
         </div>
         
         <br /><br /><br />
@@ -197,25 +197,6 @@
             logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
             darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
         }
-
-        //document.addEventListener("DOMContentLoaded", function () {
-        //    const grid = document.querySelector(".products-grid");
-
-        //    grid.addEventListener("click", (e) => {
-        //        const card = e.target.closest(".product-card");
-        //        if (!card) return;
-
-        //        const imageSrc = card.dataset.image;
-        //        const title = card.dataset.title;
-        //        const price = card.dataset.price;
-
-        //        localStorage.setItem('quickViewImage', imageSrc);
-        //        localStorage.setItem('quickViewTitle', title);
-        //        localStorage.setItem('quickViewPrice', price);
-
-        //        window.location.href = 'quickView.html';
-        //    });
-        //});
 
         document.addEventListener("DOMContentLoaded", function () {
             const hamburger = document.querySelector(".hamburger-menu");
@@ -355,8 +336,8 @@
                     <div class="product-info">
                         <h3 data-translate="${product.id || product.title}">${translatedTitle}</h3>
                         <span class="price-text">${product.price}</span>
-                        <div class="product-size">${product.size}</div>
-                        <div class="product-quantity">${product.quantity}</div>
+                        <div class="product-size" data-translate="size">${translations[savedLanguage]['size']}${product.size}</div>
+                        <div class="product-quantity" data-translate="quantity">${translations[savedLanguage]['quantity']}${product.quantity}</div>
                     </div>
                 `;
                 cartContainer.appendChild(productCard);
@@ -557,6 +538,37 @@
             const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
             changeLanguage(savedLanguage);
         });
+
+        // Función para vaciar el carrito y actualizar el cerebro
+        function vaciarCarrito() {
+            localStorage.removeItem('cart');
+            const cartBrain = document.querySelector('.cart-brain');
+            cartBrain.classList.remove('show');
+            location.reload();
+        }
+
+        // Función para actualizar el estado del cerebro
+        function updateCartBrain() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartBrain = document.querySelector('.cart-brain');
+            
+            if (cart.length > 0) {
+                cartBrain.classList.add('show');
+            } else {
+                cartBrain.classList.remove('show');
+            }
+        }
+
+        // Agregar el cerebro al carrito cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartBrain = document.createElement('i');
+            cartBrain.className = 'cart-brain fas fa-brain';
+            cartIcon.appendChild(cartBrain);
+            
+            // Actualizar el estado inicial del cerebro
+            updateCartBrain();
+        });
     </script>
     <script src="../scripts/currency.js"></script>
     <script src="../scripts/quickView.js"></script>
@@ -614,5 +626,26 @@
     letter-spacing: 1px;
     text-shadow: 0 2px 8px rgba(255,0,0,0.08);
     font-family: 'Roboto-Regular', sans-serif;
+}
+
+/* Estilos para el ícono del cerebro */
+.cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-brain {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 16px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.cart-brain.show {
+    opacity: 1;
+    transform: scale(1);
 }
 </style> 
