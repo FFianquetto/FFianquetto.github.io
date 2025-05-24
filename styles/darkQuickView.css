@@ -154,7 +154,7 @@
     align-items: center;
     border: 2px solid #FFFFFF;
     background-color: black;
-    color: black;
+    color: white;
     width: fit-content;
     margin-bottom: 30px;
 }
@@ -165,7 +165,7 @@
     border: none;
     font-size: 16px;
     cursor: pointer;
-    color: black; 
+    color: white; 
 }
 
 .quantity-button:hover {
@@ -177,7 +177,7 @@
     border-left: 2px solid #FFFFFF;
     border-right: 2px solid #FFFFFF;
     font-family: 'Roboto-Condensed-Bold', sans-serif;
-    color: black;
+    color: white;
 }
 
 .add-to-cart {
