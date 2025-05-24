@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT8 Store - Product</title>
+    <script>
+        // Cargar el tema correcto antes de que se muestre la página
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        const themeLink = document.createElement('link');
+        themeLink.rel = 'stylesheet';
+        themeLink.id = 'theme-style';
+        themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+        document.head.appendChild(themeLink);
+
+        // Cargar el CSS de quickView según el tema
+        const quickViewLink = document.createElement('link');
+        quickViewLink.rel = 'stylesheet';
+        quickViewLink.href = isDarkMode ? '../styles/whiteQuickView.css' : '../styles/darkQuickView.css';
+        document.head.appendChild(quickViewLink);
+
+        // Agregar clase dark-mode al body si está en modo oscuro
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/search.css">
+    <link rel="stylesheet" href="../styles/joinForm.css">
+    <link rel="stylesheet" href="../styles/language.css">
+    <link rel="stylesheet" href="../styles/quickView.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo-section">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo" id="logo-img">
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">
+                    HOME
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="apparel.html" class="active">
+                    APPAREL
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="accesories.html">
+                    ACCESORIES
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="sale.html">
+                    COMING SOON
+                </a>
+                <a href="giftCard.html">
+                    GIFTCARD
+                    <div class="nav-indicator"></div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <div class="currency-selector">
+                    <select id="currency-select">
+                        <option value="USD">USD $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="EUR">EUR €</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="MXN">MXN $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="ARS">ARS $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="GBP">GBP £</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="JPY">JPY ¥</option>
+                        <i class="fas fa-chevron-down"></i>
+                    </select>
+                </div>
+                <div class="language-dropdown">
+                    <button class="join-btn" onclick="toggleLanguageMenu()">Language</button>
+                    <div class="language-menu" style="display: none;">
+                        <button onclick="changeLanguage('en')">English</button>
+                        <button onclick="changeLanguage('es')">Español</button>
+                        <button onclick="changeLanguage('fr')">Français</button>
+                        <button onclick="changeLanguage('de')">Deutsch</button>
+                        <button onclick="changeLanguage('ja')">日本語</button>
+                    </div>
+                </div>
+                <button class="join-btn" onclick="openJoinForm()">JOIN US!</button>
+                <div class="cart-icon">
+                    <a href="shoppingCart.html"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+            <div class="hamburger-menu">
+                <i class="fas fa-bars"></i> <!-- o usa un ícono SVG -->
+            </div>
+
+            <div class="mobile-menu">
+                <a href="index.html">HOME</a>
+                <a href="apparel.html" class="active">APPAREL</a>
+                <a href="accesories.html">ACCESORIES</a>
+                <a href="sale.html">COMING SOON</a>
+                <a href="giftCard.html">GIFTCARD</a>
+                <a id="join-link">JOIN US</a>
+                <a href="shoppingCart.html">CART</a>
+            </div>
+        </nav>
+       
+        <!-- Contenido del Producto -->
+        <div class="product-image">
+            <img src="" alt="Zomboy Vintage Punk Hoodie" id="product-img">
+        </div>
+        <div class="product-container">
+
+            <div class="product-info-quick">
+                <h1 class="product-title" id="product-title"></h1>
+                <div class="product-price price-text" id="product-price"></div>
+
+                <div class="size-grid">
+                    <button class="size-button" data-size="small">SMALL</button>
+                    <button class="size-button" data-size="medium">MEDIUM</button>
+                    <button class="size-button" data-size="large">LARGE</button>
+                    <button class="size-button" data-size="xlarge">X-LARGE</button>
+                    <button class="size-button" data-size="xxlarge">XX-LARGE</button>
+                    <button class="size-button" data-size="xxxlarge">XXX-LARGE</button>
+                </div>
+
+                <div class="quantity-label" data-translate="quantity">QUANTITY</div>
+                <div class="quantity-selector">
+                    <button class="quantity-button minus">-</button>
+                    <span class="quantity-display">1</span>
+                    <button class="quantity-button plus">+</button>
+                </div>
+
+                <button class="add-to-cart" data-translate="addToCart">ADD TO CART</button>
+               
+                <div class="details">
+                    <h3 data-translate="details">DETAILS</h3>
+                    <ul id="product-descriptions">
+                        <!-- Las descripciones se cargarán dinámicamente aquí -->
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sección de productos sugeridos debajo de la imagen -->
+        <div class="suggested-section">
+            <h2 class="suggested-title" data-translate="youMayAlsoLike">YOU MAY ALSO LIKE</h2>
+            <div class="suggested-products" id="suggested-products">
+                <!-- Los productos sugeridos se cargarán dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
+    <!-- Formulario Join Us -->
+    <div class="form-container" style="display: none;">
+        <div class="form-content">
+            <div class="kt8-logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <h2>Log In</h2>
+            <form id="joinForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="name">Enter your email and we'll send you a code</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="error-message" style="display: none; color: #ff0000; font-size: 16px; margin-top: 8px; text-align: center; font-weight: 500;">
+                        El correo electrónico ingresado no es válido
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name"> Privacy Policy...</label>
+                </div>
+                <button type="submit" class="submit-btn">CONTINUE</button>
+            </form>
+            <button class="close-btn" onclick="closeForm()">×</button>
+            
+            <!-- Mensaje de éxito -->
+            <div class="success-message">
+                <div class="success-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <p>¡Correo enviado!<br>Revisa tu bandeja de entrada</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-message success-cart-message" style="display: none;">
+        <div class="success-icon">
+            <i class="fas fa-brain"></i>
+        </div>
+        <p style="color: #000;">¡Producto añadido al carrito!</p>
+    </div>
+
+    <script>
+        // Función global para mostrar el mensaje de éxito del carrito con animación igual al form
+        function showCartSuccessMessage() {
+            const cartSuccessMsg = document.querySelector('.success-cart-message');
+            if (cartSuccessMsg) {
+                cartSuccessMsg.classList.add('show');
+                cartSuccessMsg.style.display = 'block';
+                setTimeout(() => {
+                    cartSuccessMsg.classList.remove('show');
+                    setTimeout(() => {
+                        cartSuccessMsg.style.display = 'none';
+                    }, 400);
+                }, 3000);
+            }
+        }
+
+        // Modifica el evento de añadir al carrito para mostrar el mensaje
+        document.querySelector('.add-to-cart').addEventListener('click', () => {
+            const image = localStorage.getItem('quickViewImage');
+            const title = localStorage.getItem('quickViewTitle');
+            const price = localStorage.getItem('quickViewPrice');
+            const size = localStorage.getItem('selectedSize');
+            const quantity = parseInt(document.querySelector('.quantity-display').textContent);
+            let productId = localStorage.getItem('quickViewId');
+            if (!productId && title) {
+                // Generar un id a partir del título en inglés, mayúsculas y guiones bajos
+                productId = title.trim().toUpperCase().replace(/\s+/g, '_');
+                localStorage.setItem('quickViewId', productId);
+            }
+            const product = { id: productId, image, title, price, size, quantity };
+            // Obtener el carrito actual
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            // Agregar el nuevo producto
+            cart.push(product);
+            // Guardar el carrito actualizado
+            localStorage.setItem('cart', JSON.stringify(cart));
+            // Mostrar mensaje de éxito
+            showCartSuccessMessage();
+        });
+
+        //Funciones del menu hamburguesa
+        document.addEventListener("DOMContentLoaded", function () {
+            const hamburger = document.querySelector(".hamburger-menu");
+            const mobileMenu = document.querySelector(".mobile-menu");
+            const joinLink = document.getElementById("join-link");
+            const menuLinks = mobileMenu.querySelectorAll("a");
+
+            // Toggle al hacer clic en el ícono de hamburguesa
+            hamburger.addEventListener("click", () => {
+                mobileMenu.classList.toggle("open");
+            });
+
+            // Cierra el menú al hacer clic en cualquier enlace
+            menuLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    mobileMenu.classList.remove("open");
+                });
+            });
+
+            // También llama a la función openJoinForm() si se hace clic en JOIN US
+            if (joinLink) {
+                joinLink.addEventListener("click", () => {
+                    openJoinForm();
+                });
+            }
+
+            // Cierra el menú al hacer scroll
+            window.addEventListener("scroll", () => {
+                mobileMenu.classList.remove("open");
+            });
+
+            // Cierra el menú al hacer clic fuera del menú y del ícono de hamburguesa
+            document.addEventListener("click", (e) => {
+                if (
+                    !mobileMenu.contains(e.target) &&
+                    !hamburger.contains(e.target)
+                ) {
+                    mobileMenu.classList.remove("open");
+                }
+            });
+        });
+        // Cargar la información del producto desde localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const productImage = document.getElementById('product-img');
+            const productTitle = document.getElementById('product-title');
+            const productPrice = document.getElementById('product-price');
+            const logoImg = document.getElementById('logo-img');
+            const productDescriptions = document.getElementById('product-descriptions');
+            const suggestedProductsContainer = document.getElementById('suggested-products');
+
+            // Obtener la información del producto desde localStorage
+            const imageSrc = localStorage.getItem('quickViewImage');
+            const title = localStorage.getItem('quickViewTitle');
+            const price = localStorage.getItem('quickViewPrice');
+            const desc1 = localStorage.getItem('quickViewDesc1');
+            const desc2 = localStorage.getItem('quickViewDesc2');
+            const desc3 = localStorage.getItem('quickViewDesc3');
+            const categoria = localStorage.getItem('quickViewCategoria');
+
+            // Limpiar las descripciones anteriores
+            productDescriptions.innerHTML = '';
+
+            // Agregar las nuevas descripciones si existen
+            if (desc1) {
+                const li1 = document.createElement('li');
+                li1.setAttribute('data-translate', 'desc1');
+                li1.textContent = desc1;
+                productDescriptions.appendChild(li1);
+            }
+            if (desc2) {
+                const li2 = document.createElement('li');
+                li2.setAttribute('data-translate', 'desc2');
+                li2.textContent = desc2;
+                productDescriptions.appendChild(li2);
+            }
+            if (desc3) {
+                const li3 = document.createElement('li');
+                li3.setAttribute('data-translate', 'desc3');
+                li3.textContent = desc3;
+                productDescriptions.appendChild(li3);
+            }
+
+            // Actualizar la información del producto
+            if (imageSrc) {
+                // Ajustar la ruta de la imagen si es necesario
+                let rutaImagen = imageSrc;
+                if (!rutaImagen.includes('assets/')) {
+                    // Extraer el nombre del archivo
+                    const fileName = rutaImagen.split('/').pop();
+
+                    // Determinar la carpeta según el nombre del archivo
+                    if (fileName.startsWith('Z')) {
+                        rutaImagen = '../assets/apparelImg/' + fileName;
+                    } else if (fileName.startsWith('Z1')) {
+                        rutaImagen = '../assets/accesoriesImg/' + fileName;
+                    } else if (fileName.startsWith('S')) {
+                        rutaImagen = '../assets/saleImg/' + fileName;
+                    } else if (fileName.includes('giftCard')) {
+                        rutaImagen = '../assets/giftCard/' + fileName;
+                    } else {
+                        rutaImagen = '../assets/apparelImg/' + fileName;
+                    }
+                }
+
+                productImage.src = rutaImagen;
+                productImage.alt = title || 'Producto';
+            }
+
+            if (title) {
+                productTitle.textContent = title;
+                document.title = 'KT8 Store - ' + title;
+            }
+
+            if (price) {
+                productPrice.textContent = price;
+                productPrice.setAttribute('data-original-price', price.replace(/[^0-9.]/g, ''));
+            }
+
+            // Cargar productos recomendados
+            if (categoria) {
+                const productosRecomendados = getRecommendedProducts(categoria);
+                suggestedProductsContainer.innerHTML = '';
+
+                productosRecomendados.forEach(producto => {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'suggested-product';
+
+                    // Usar la ruta de imagen directamente del producto recomendado
+                    const rutaImagen = producto.imagen;
+
+                    productDiv.onclick = () => {
+                        // Guardar la información del nuevo producto en localStorage
+                        localStorage.setItem('quickViewImage', `../${rutaImagen}`);
+                        localStorage.setItem('quickViewTitle', producto.titulo);
+                        localStorage.setItem('quickViewPrice', producto.precio);
+
+                        // Buscar el producto en productData para obtener las descripciones
+                        const productoCompleto = productData.productos.find(p => p.titulo === producto.titulo);
+                        if (productoCompleto) {
+                            localStorage.setItem('quickViewDesc1', productoCompleto.descripcion1);
+                            localStorage.setItem('quickViewDesc2', productoCompleto.descripcion2);
+                            localStorage.setItem('quickViewDesc3', productoCompleto.descripcion3);
+                            localStorage.setItem('quickViewCategoria', productoCompleto.categoria);
+                        }
+
+                        // Redirigir a quickView.html para mostrar el producto desde arriba
+                        window.location.href = 'quickView.html';
+                    };
+
+                    productDiv.innerHTML = `
+                        <img src="../${rutaImagen}" alt="${producto.titulo}" class="suggested-img" loading="lazy">
+                        <div class="suggested-info">
+                            <div class="suggested-name">${producto.titulo}</div>
+                            <div class="suggested-price">${producto.precio}</div>
+                        </div>
+                    `;
+
+                    suggestedProductsContainer.appendChild(productDiv);
+                });
+            }
+
+            // Actualizar el logo según el tema
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+            }
+        });
+
+        // Funcionalidad para los botones de cantidad
+        const quantityDisplay = document.querySelector('.quantity-display');
+        let quantity = 1;
+
+        document.querySelector('.minus').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                quantityDisplay.textContent = quantity;
+            }
+        });
+
+        document.querySelector('.plus').addEventListener('click', () => {
+            quantity++;
+            quantityDisplay.textContent = quantity;
+        });
+
+        // Funcionalidad para los botones de talla
+        document.querySelectorAll('.size-button').forEach(button => {
+            button.addEventListener('click', function () {
+                // Guardar la talla seleccionada en localStorage
+                localStorage.setItem('selectedSize', this.getAttribute('data-size'));
+
+                // Recargar la página
+                window.location.reload();
+            });
+        });
+
+        // Al cargar la página, marcar la talla seleccionada si existe
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedSize = localStorage.getItem('selectedSize');
+            if (selectedSize) {
+                document.querySelectorAll('.size-button').forEach(button => {
+                    if (button.getAttribute('data-size') === selectedSize) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        // Funcionalidad para el botón de cerrar
+        document.querySelector('.quickview-close')?.addEventListener('click', () => {
+            window.close();
+        });
+
+        function toggleDarkMode() {
+            const themeLink = document.getElementById('theme-style');
+            const bannerImg = document.querySelector('.banner img');
+            const logoImg = document.querySelector('.logo-section img');
+            const isDarkMode = themeLink.href.includes('lightMode.css');
+
+            // Cambiar el tema CSS
+            themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+
+            // Cambiar el logo
+            logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
+
+            // Cambiar el ícono del botón
+            darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
+
+            // Guardar preferencia
+            localStorage.setItem('darkMode', isDarkMode);
+        
+        }
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            const themeLink = document.getElementById('theme-style');
+            const logoImg = document.querySelector('.logo-section img');
+            themeLink.href = '../styles/darkMode.css';
+            logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+            darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
+        }
+        
+
+        // Función para abrir la vista rápida del producto
+        function openQuickView(imageSrc, productTitle, productPrice) {
+            // Guardar la información del producto en localStorage
+            localStorage.setItem('quickViewImage', imageSrc);
+            localStorage.setItem('quickViewTitle', productTitle);
+            localStorage.setItem('quickViewPrice', productPrice);
+
+            // Obtener las descripciones traducidas según el idioma actual
+            const lang = translations[currentLanguage];
+            localStorage.setItem('quickViewDesc1', lang.desc1 || '');
+            localStorage.setItem('quickViewDesc2', lang.desc2 || '');
+            localStorage.setItem('quickViewDesc3', lang.desc3 || '');
+
+            // Redirigir a la página de quickView
+            window.location.href = 'quickView.html';
+        }
+
+        // Funciones para el formulario
+        function openJoinForm() {
+            const formContainer = document.querySelector('.form-container');
+            formContainer.style.display = 'flex';
+        }
+
+        function closeForm() {
+            const formContainer = document.querySelector('.form-container');
+            formContainer.style.display = 'none';
+        }
+
+        // Manejar el envío del formulario
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Obtener el valor del correo
+            const email = document.getElementById('name').value;
+            const errorMessage = document.querySelector('.error-message');
+            const emailInput = document.getElementById('name');
+            
+            // Validar el correo
+            if (email && email.includes('@')) {
+                // Ocultar mensaje de error si existe
+                errorMessage.style.display = 'none';
+                emailInput.style.border = '1px solid #000000';
+                
+                // Mostrar el mensaje de éxito
+                const successMessage = document.querySelector('.success-message');
+                successMessage.classList.add('show');
+                
+                // Limpiar el formulario
+                document.getElementById('name').value = '';
+                
+                // Cerrar el formulario después de 5 segundos
+                setTimeout(() => {
+                    const formContainer = document.querySelector('.form-container');
+                    formContainer.style.display = 'none';
+                    // Remover la clase show después de cerrar
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 300);
+                }, 5000);
+            } else {
+                // Mostrar mensaje de error y borde rojo
+                errorMessage.style.display = 'block';
+                emailInput.style.border = '1px solid #ff0000';
+            }
+
+            return false;
+        });
+
+        function toggleLanguageMenu() {
+            const menu = document.querySelector('.language-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Cerrar el menú de idiomas al hacer clic fuera de él
+        document.addEventListener('click', (event) => {
+            const languageMenu = document.querySelector('.language-menu');
+            const languageButton = document.querySelector('.language-dropdown button');
+
+            if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.style.display = 'none';
+            }
+        });
+
+        // Función para actualizar los textos según el idioma
+        function updateQuickViewTexts() {
+            const lang = translations[currentLanguage];
+
+            // Actualizar textos con atributo data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (lang[key]) {
+                    element.textContent = lang[key];
+                }
+            });
+
+            // Actualizar textos de tallas
+            const sizeButtons = document.querySelectorAll('.size-button');
+            const sizeTranslations = {
+                'small': lang.small,
+                'medium': lang.medium,
+                'large': lang.large,
+                'xlarge': lang.xlarge,
+                'xxlarge': lang.xxlarge,
+                'xxxlarge': lang.xxxlarge
+            };
+
+            sizeButtons.forEach(button => {
+                const size = button.getAttribute('data-size');
+                if (sizeTranslations[size]) {
+                    button.textContent = sizeTranslations[size];
+                }
+            });
+        }
+
+        // Actualizar textos al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateQuickViewTexts();
+        });
+
+        // Actualizar textos cuando cambie el idioma
+        window.addEventListener('languageChanged', () => {
+            updateQuickViewTexts();
+        });
+
+        // Objeto de traducciones para quickView
+        const quickViewTranslations = {
+            'DEAD_ROSES_PIN': {
+                en: {
+                    title: 'DEAD ROSES PIN',
+                    desc1: 'High quality enamel pin.',
+                    desc2: 'Limited edition.',
+                    desc3: 'Perfect for your jacket or backpack.'
+                },
+                es: {
+                    title: 'PIN ROSAS MUERTAS',
+                    desc1: 'Pin esmaltado de alta calidad.',
+                    desc2: 'Edición limitada.',
+                    desc3: 'Perfecto para tu chaqueta o mochila.'
+                },
+                de: {
+                    title: 'TOTEN ROSEN PIN',
+                    desc1: 'Hochwertiger Emaille-Pin.',
+                    desc2: 'Limitierte Auflage.',
+                    desc3: 'Perfekt für deine Jacke oder deinen Rucksack.'
+                },
+                fr: {
+                    title: 'PIN ROSES MORTES',
+                    desc1: 'Pin émaillé de haute qualité.',
+                    desc2: 'Édition limitée.',
+                    desc3: 'Parfait pour votre veste ou sac à dos.'
+                },
+                ja: {
+                    title: 'デッドローズピン',
+                    desc1: '高品質のエナメルピン。',
+                    desc2: '限定版。',
+                    desc3: 'ジャケットやリュックに最適。'
+                }
+            },
+            // ... agrega más productos aquí ...
+        };
+
+
+        // Función para actualizar los textos de quickView según el idioma
+        function updateQuickViewLanguage(lang) {
+            const productId = localStorage.getItem('quickViewId');
+            if (productId && quickViewTranslations[productId] && quickViewTranslations[productId][lang]) {
+                const t = quickViewTranslations[productId][lang];
+                document.getElementById('product-title').textContent = t.title;
+                const descs = document.querySelectorAll('#product-descriptions li');
+                if (descs[0]) descs[0].textContent = t.desc1;
+                if (descs[1]) descs[1].textContent = t.desc2;
+                if (descs[2]) descs[2].textContent = t.desc3;
+            }
+            // Actualizar tallas y UI
+            const ui = quickViewUITranslations[lang];
+            document.querySelectorAll('.size-button').forEach(btn => {
+                const size = btn.getAttribute('data-size');
+                if (ui[size]) btn.textContent = ui[size];
+            });
+            if (ui.addToCart) document.querySelector('.add-to-cart').textContent = ui.addToCart;
+            if (ui.quantity) document.querySelector('.quantity-label').textContent = ui.quantity;
+            if (ui.details) document.querySelector('[data-translate="details"]').textContent = ui.details;
+            if (ui.youMayAlsoLike) document.querySelector('[data-translate="youMayAlsoLike"]').textContent = ui.youMayAlsoLike;
+        }
+
+        // Detectar cambio de idioma y actualizar quickView
+        window.addEventListener('languageChanged', () => {
+            const lang = localStorage.getItem('selectedLanguage') || 'es';
+            updateQuickViewLanguage(lang);
+        });
+        // También al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = localStorage.getItem('selectedLanguage') || 'es';
+            updateQuickViewLanguage(lang);
+        });
+    </script>
+    <script src="../scripts/currency.js"></script>
+    <script src="../scripts/quickView.js"></script>
+    <script src="../scripts/productData.js"></script>
+    <script src="../scripts/translations.js"></script>
+    <script src="../scripts/language.js"></script>
+    <footer class="footer">
+        <div class="footer-text">© 2025, KT8 Merch Co All rights reserved.</div>
+        <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-apple-pay"></i>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT8 Store - Apparel</title>
+    <script>
+        // Cargar el tema correcto antes de que se muestre la página
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        const themeLink = document.createElement('link');
+        themeLink.rel = 'stylesheet';
+        themeLink.id = 'theme-style';
+        themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+        document.head.appendChild(themeLink);
+
+        // Agregar clase dark-mode al body si está en modo oscuro
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.add('light-mode');
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/search.css">
+    <link rel="stylesheet" href="../styles/joinForm.css">
+    <link rel="stylesheet" href="../styles/language.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo-section">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo" id="logo-img">
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">
+                    HOME
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="apparel.html" class="active">
+                    APPAREL
+                    <span class="brain-emoji">🧠</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="accesories.html">
+                    ACCESORIES
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="sale.html">
+                    COMING SOON
+                </a>
+                <a href="giftCard.html">
+                    GIFTCARD
+                    <div class="nav-indicator"></div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <div class="currency-selector">
+                    <select id="currency-select">
+                        <option value="USD">USD $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="EUR">EUR €</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="MXN">MXN $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="ARS">ARS $</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="GBP">GBP £</option>
+                        <i class="fas fa-chevron-down"></i>
+                        <option value="JPY">JPY ¥</option>
+                        <i class="fas fa-chevron-down"></i>
+                    </select>
+                </div>
+                <button class="join-btn" onclick="openJoinForm()">JOIN US!</button>
+                <div class="cart-icon">
+                    <a href="shoppingCart.html"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+            <div class="hamburger-menu">
+                <i class="fas fa-bars"></i> <!-- o usa un ícono SVG -->
+            </div>
+
+            <div class="mobile-menu">
+                <a href="index.html">HOME</a>
+                <a href="accesories.html">ACCESORIES</a>
+                <a href="sale.html">COMING SOON</a>
+                <a href="giftCard.html">GIFTCARD</a>
+                <a id="join-link">JOIN US</a>
+            </div>
+        </nav>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="kt8-logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search for..." id="search-input">
+            </div>
+            <div class="social-media">
+                <div class="dark-mode-toggle">
+                    <button id="darkModeBtn" onclick="toggleDarkMode()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <span>SOCIAL MEDIA</span>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+        </div>
+        <br /><br /><br />
+        <!-- Price Section -->
+        <div class="price-section">
+            <div id="cart-container" class="products-grid"></div>
+        </div>
+        <br /><br /><br />
+
+        <div class="product-container">
+            <button class="limpiar" onclick="localStorage.removeItem('cart'); location.reload();" data-translate="empty-cart">VACIAR CARRITO</button>
+        </div>
+        
+        <br /><br /><br />
+    </div>
+    <div class="help-button">
+        <div class="help-icon">?</div>
+        <span data-translate="help">Ayuda</span>
+    </div>
+    <footer class="footer">
+        <div class="footer-text">© 2025, KT8 Merch Co All rights reserved.</div>
+        <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-apple-pay"></i>
+        </div>
+    </footer>
+
+    <!-- Formulario Join Us -->
+    <div class="form-container" style="display: none;">
+        <div class="form-content">
+            <div class="kt8-logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <h2>Log In</h2>
+            <form id="joinForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="name">Enter your email and we'll send you a code</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="error-message" style="display: none; color: #ff0000; font-size: 16px; margin-top: 8px; text-align: center; font-weight: 500;">
+                        El correo electrónico ingresado no es válido
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name"> Privacy Policy...</label>
+                </div>
+                <button type="submit" class="submit-btn">CONTINUE</button>
+            </form>
+            <button class="close-btn" onclick="closeForm()">×</button>
+
+            <!-- Mensaje de éxito -->
+            <div class="success-message">
+                <div class="success-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <p>¡Correo enviado!<br>Revisa tu bandeja de entrada</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            const themeLink = document.getElementById('theme-style');
+            const bannerImg = document.querySelector('.banner img');
+            const logoImg = document.querySelector('.logo-section img');
+            const isDarkMode = themeLink.href.includes('lightMode.css');
+
+            // Cambiar el tema CSS
+            themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+
+            // Cambiar el logo
+            logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
+
+            // Cambiar el ícono del botón
+            darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
+
+            // Guardar preferencia
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            const themeLink = document.getElementById('theme-style');
+            const logoImg = document.querySelector('.logo-section img');
+            themeLink.href = '../styles/darkMode.css';
+            logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+            darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
+        }
+
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    const grid = document.querySelector(".products-grid");
+
+        //    grid.addEventListener("click", (e) => {
+        //        const card = e.target.closest(".product-card");
+        //        if (!card) return;
+
+        //        const imageSrc = card.dataset.image;
+        //        const title = card.dataset.title;
+        //        const price = card.dataset.price;
+
+        //        localStorage.setItem('quickViewImage', imageSrc);
+        //        localStorage.setItem('quickViewTitle', title);
+        //        localStorage.setItem('quickViewPrice', price);
+
+        //        window.location.href = 'quickView.html';
+        //    });
+        //});
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const hamburger = document.querySelector(".hamburger-menu");
+            const mobileMenu = document.querySelector(".mobile-menu");
+            const joinLink = document.getElementById("join-link");
+            const menuLinks = mobileMenu.querySelectorAll("a");
+
+            // Toggle al hacer clic en el ícono de hamburguesa
+            hamburger.addEventListener("click", () => {
+                mobileMenu.classList.toggle("open");
+            });
+
+            // Cierra el menú al hacer clic en cualquier enlace
+            menuLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    mobileMenu.classList.remove("open");
+                });
+            });
+
+            // También llama a la función openJoinForm() si se hace clic en JOIN US
+            if (joinLink) {
+                joinLink.addEventListener("click", () => {
+                    openJoinForm();
+                });
+            }
+
+            // Cierra el menú al hacer scroll
+            window.addEventListener("scroll", () => {
+                mobileMenu.classList.remove("open");
+            });
+
+            // Cierra el menú al hacer clic fuera del menú y del ícono de hamburguesa
+            document.addEventListener("click", (e) => {
+                if (
+                    !mobileMenu.contains(e.target) &&
+                    !hamburger.contains(e.target)
+                ) {
+                    mobileMenu.classList.remove("open");
+                }
+            });
+        });
+
+        //Cargar carrito
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContainer = document.getElementById('cart-container');
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="empty-cart-message">
+                        <p>Tu carrito está vacío.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            cart.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+                const translations = {
+                    'en': {
+                        'size': 'Size: ',
+                        'quantity': 'Quantity: ',
+                        'ZOMBOUCKET HAT - NEON': 'ZOMBOUCKET HAT - NEON',
+                        'ZOMBOY BAG - NEON': 'ZOMBOY BAG - NEON',
+                        'ZOM BOY SLIDES': 'ZOM BOY SLIDES',
+                        'FRIENDLY ZOM DAD HAT': 'FRIENDLY ZOM DAD HAT',
+                        'ZOMBOY BATH ROBE': 'ZOMBOY BATH ROBE',
+                        'FRIENDLY ZOM BEANIE': 'FRIENDLY ZOM BEANIE',
+                        'GIFT CARD - $25.00': 'GIFT CARD - $25.00',
+                        'GIFT CARD - $50.00': 'GIFT CARD - $50.00',
+                        'GIFT CARD - $100.00': 'GIFT CARD - $100.00'
+                    },
+                    'es': {
+                        'size': 'Talla: ',
+                        'quantity': 'Cantidad: ',
+                        'ZOMBOUCKET HAT - NEON': 'GORRO ZOMBOUCKET - NEON',
+                        'ZOMBOY BAG - NEON': 'BOLSA ZOMBOY - NEON',
+                        'ZOM BOY SLIDES': 'CHANCLAS ZOM BOY',
+                        'FRIENDLY ZOM DAD HAT': 'GORRA ZOM PAPÁ',
+                        'ZOMBOY BATH ROBE': 'BATA ZOMBOY',
+                        'FRIENDLY ZOM BEANIE': 'GORRO ZOM AMIGABLE',
+                        'GIFT CARD - $25.00': 'TARJETA DE REGALO - $25.00',
+                        'GIFT CARD - $50.00': 'TARJETA DE REGALO - $50.00',
+                        'GIFT CARD - $100.00': 'TARJETA DE REGALO - $100.00'
+                    },
+                    'fr': {
+                        'size': 'Taille: ',
+                        'quantity': 'Quantité: ',
+                        'ZOMBOUCKET HAT - NEON': 'CHAPEAU ZOMBOUCKET - NEON',
+                        'ZOMBOY BAG - NEON': 'SAC ZOMBOY - NEON',
+                        'ZOM BOY SLIDES': 'TONGUES ZOM BOY',
+                        'FRIENDLY ZOM DAD HAT': 'CASQUETTE ZOM PAPA',
+                        'ZOMBOY BATH ROBE': 'PEIGNOIR ZOMBOY',
+                        'FRIENDLY ZOM BEANIE': 'BONNET ZOM AMICAL',
+                        'GIFT CARD - $25.00': 'CARTE CADEAU - $25.00',
+                        'GIFT CARD - $50.00': 'CARTE CADEAU - $50.00',
+                        'GIFT CARD - $100.00': 'CARTE CADEAU - $100.00'
+                    },
+                    'de': {
+                        'size': 'Größe: ',
+                        'quantity': 'Menge: ',
+                        'ZOMBOUCKET HAT - NEON': 'ZOMBOUCKET HUT - NEON',
+                        'ZOMBOY BAG - NEON': 'ZOMBOY TASCHE - NEON',
+                        'ZOM BOY SLIDES': 'ZOM BOY SCHLAPPEN',
+                        'FRIENDLY ZOM DAD HAT': 'FREUNDLICHER ZOM PAPA HUT',
+                        'ZOMBOY BATH ROBE': 'ZOMBOY BADEMANTEL',
+                        'FRIENDLY ZOM BEANIE': 'FREUNDLICHE ZOM MÜTZE',
+                        'GIFT CARD - $25.00': 'GESCHENKKARTE - $25.00',
+                        'GIFT CARD - $50.00': 'GESCHENKKARTE - $50.00',
+                        'GIFT CARD - $100.00': 'GESCHENKKARTE - $100.00',
+                        'DEAD_ROSES_PIN': 'TOTEN ROSEN PIN',
+                        'GIFT_CARD_$50.00': 'GESCHENKKARTE - $50.00',
+                    },
+                    'ja': {
+                        'size': 'サイズ: ',
+                        'quantity': '数量: ',
+                        'ZOMBOUCKET HAT - NEON': 'ゾンボケットハット - ネオン',
+                        'ZOMBOY BAG - NEON': 'ゾンボイバッグ - ネオン',
+                        'ZOM BOY SLIDES': 'ゾンボイスライド',
+                        'FRIENDLY ZOM DAD HAT': 'フレンドリーゾンパパハット',
+                        'ZOMBOY BATH ROBE': 'ゾンボイバスローブ',
+                        'FRIENDLY ZOM BEANIE': 'フレンドリーゾンビーニー',
+                        'GIFT CARD - $25.00': 'ギフトカード - $25.00',
+                        'GIFT CARD - $50.00': 'ギフトカード - $50.00',
+                        'GIFT CARD - $100.00': 'ギフトカード - $100.00'
+                    }
+                };
+                // Usar el id para traducir el título
+                let translatedTitle = product.title;
+                if (product.id && translations[savedLanguage][product.id]) {
+                    translatedTitle = translations[savedLanguage][product.id];
+                }
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${translatedTitle}" class="product-image">
+                    <div class="product-info">
+                        <h3 data-translate="${product.id || product.title}">${translatedTitle}</h3>
+                        <span class="price-text">${product.price}</span>
+                        <div class="product-size">${product.size}</div>
+                        <div class="product-quantity">${product.quantity}</div>
+                    </div>
+                `;
+                cartContainer.appendChild(productCard);
+            });
+
+            // Cargar el idioma guardado después de cargar el carrito
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+            changeLanguage(savedLanguage);
+        });
+
+        // Funciones para el formulario
+        function openJoinForm() {
+            const formContainer = document.querySelector('.form-container');
+            formContainer.style.display = 'flex';
+        }
+
+        function closeForm() {
+            const formContainer = document.querySelector('.form-container');
+            formContainer.style.display = 'none';
+        }
+
+        // Manejar el envío del formulario
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Obtener el valor del correo
+            const email = document.getElementById('name').value;
+            const errorMessage = document.querySelector('.error-message');
+            const emailInput = document.getElementById('name');
+
+            // Validar el correo
+            if (email && email.includes('@')) {
+                // Ocultar mensaje de error si existe
+                errorMessage.style.display = 'none';
+                emailInput.style.border = '1px solid #000000';
+
+                // Mostrar el mensaje de éxito
+                const successMessage = document.querySelector('.success-message');
+                successMessage.classList.add('show');
+
+                // Limpiar el formulario
+                document.getElementById('name').value = '';
+
+                // Cerrar el formulario después de 5 segundos
+                setTimeout(() => {
+                    const formContainer = document.querySelector('.form-container');
+                    formContainer.style.display = 'none';
+                    // Remover la clase show después de cerrar
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 300);
+                }, 5000);
+            } else {
+                // Mostrar mensaje de error y borde rojo
+                errorMessage.style.display = 'block';
+                emailInput.style.border = '1px solid #ff0000';
+            }
+
+            return false;
+        });
+
+        function toggleLanguageMenu() {
+            const menu = document.querySelector('.language-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Cerrar el menú de idiomas al hacer clic fuera de él
+        document.addEventListener('click', (event) => {
+            const languageMenu = document.querySelector('.language-menu');
+            const languageButton = document.querySelector('.language-dropdown button');
+
+            if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.style.display = 'none';
+            }
+        });
+
+        // Función para cambiar el idioma
+        function changeLanguage(lang) {
+            const translations = {
+                'en': {
+                    'empty-cart': 'EMPTY CART',
+                    'help': 'Help',
+                    'empty-cart-message': 'Your cart is empty.',
+                    'size': 'Size: ',
+                    'quantity': 'Quantity: ',
+                    'ZOMBOUCKET HAT - NEON': 'ZOMBOUCKET HAT - NEON',
+                    'ZOMBOY BAG - NEON': 'ZOMBOY BAG - NEON',
+                    'ZOM BOY SLIDES': 'ZOM BOY SLIDES',
+                    'FRIENDLY ZOM DAD HAT': 'FRIENDLY ZOM DAD HAT',
+                    'ZOMBOY BATH ROBE': 'ZOMBOY BATH ROBE',
+                    'FRIENDLY ZOM BEANIE': 'FRIENDLY ZOM BEANIE',
+                    'GIFT CARD - $25.00': 'GIFT CARD - $25.00',
+                    'GIFT CARD - $50.00': 'GIFT CARD - $50.00',
+                    'GIFT CARD - $100.00': 'GIFT CARD - $100.00'
+                },
+                'es': {
+                    'empty-cart': 'VACIAR CARRITO',
+                    'help': 'Ayuda',
+                    'empty-cart-message': 'Tu carrito está vacío.',
+                    'size': 'Talla: ',
+                    'quantity': 'Cantidad: ',
+                    'ZOMBOUCKET HAT - NEON': 'GORRO ZOMBOUCKET - NEON',
+                    'ZOMBOY BAG - NEON': 'BOLSA ZOMBOY - NEON',
+                    'ZOM BOY SLIDES': 'CHANCLAS ZOM BOY',
+                    'FRIENDLY ZOM DAD HAT': 'GORRA ZOM PAPÁ',
+                    'ZOMBOY BATH ROBE': 'BATA ZOMBOY',
+                    'FRIENDLY ZOM BEANIE': 'GORRO ZOM AMIGABLE',
+                    'GIFT CARD - $25.00': 'TARJETA DE REGALO - $25.00',
+                    'GIFT CARD - $50.00': 'TARJETA DE REGALO - $50.00',
+                    'GIFT CARD - $100.00': 'TARJETA DE REGALO - $100.00'
+                },
+                'fr': {
+                    'empty-cart': 'VIDER LE PANIER',
+                    'help': 'Aide',
+                    'empty-cart-message': 'Votre panier est vide.',
+                    'size': 'Taille: ',
+                    'quantity': 'Quantité: ',
+                    'ZOMBOUCKET HAT - NEON': 'CHAPEAU ZOMBOUCKET - NEON',
+                    'ZOMBOY BAG - NEON': 'SAC ZOMBOY - NEON',
+                    'ZOM BOY SLIDES': 'TONGUES ZOM BOY',
+                    'FRIENDLY ZOM DAD HAT': 'CASQUETTE ZOM PAPA',
+                    'ZOMBOY BATH ROBE': 'PEIGNOIR ZOMBOY',
+                    'FRIENDLY ZOM BEANIE': 'BONNET ZOM AMICAL',
+                    'GIFT CARD - $25.00': 'CARTE CADEAU - $25.00',
+                    'GIFT CARD - $50.00': 'CARTE CADEAU - $50.00',
+                    'GIFT CARD - $100.00': 'CARTE CADEAU - $100.00'
+                },
+                'de': {
+                    'empty-cart': 'WARENKORB LEEREN',
+                    'help': 'Hilfe',
+                    'empty-cart-message': 'Ihr Warenkorb ist leer.',
+                    'size': 'Größe: ',
+                    'quantity': 'Menge: ',
+                    'ZOMBOUCKET HAT - NEON': 'ZOMBOUCKET HUT - NEON',
+                    'ZOMBOY BAG - NEON': 'ZOMBOY TASCHE - NEON',
+                    'ZOM BOY SLIDES': 'ZOM BOY SCHLAPPEN',
+                    'FRIENDLY ZOM DAD HAT': 'FREUNDLICHER ZOM PAPA HUT',
+                    'ZOMBOY BATH ROBE': 'ZOMBOY BADEMANTEL',
+                    'FRIENDLY ZOM BEANIE': 'FREUNDLICHE ZOM MÜTZE',
+                    'GIFT CARD - $25.00': 'GESCHENKKARTE - $25.00',
+                    'GIFT CARD - $50.00': 'GESCHENKKARTE - $50.00',
+                    'GIFT CARD - $100.00': 'GESCHENKKARTE - $100.00'
+                },
+                'ja': {
+                    'empty-cart': 'カートを空にする',
+                    'help': 'ヘルプ',
+                    'empty-cart-message': 'カートは空です。',
+                    'size': 'サイズ: ',
+                    'quantity': '数量: ',
+                    'ZOMBOUCKET HAT - NEON': 'ゾンボケットハット - ネオン',
+                    'ZOMBOY BAG - NEON': 'ゾンボイバッグ - ネオン',
+                    'ZOM BOY SLIDES': 'ゾンボイスライド',
+                    'FRIENDLY ZOM DAD HAT': 'フレンドリーゾンパパハット',
+                    'ZOMBOY BATH ROBE': 'ゾンボイバスローブ',
+                    'FRIENDLY ZOM BEANIE': 'フレンドリーゾンビーニー',
+                    'GIFT CARD - $25.00': 'ギフトカード - $25.00',
+                    'GIFT CARD - $50.00': 'ギフトカード - $50.00',
+                    'GIFT CARD - $100.00': 'ギフトカード - $100.00'
+                }
+            };
+
+            // Guardar el idioma seleccionado
+            localStorage.setItem('selectedLanguage', lang);
+
+            // Traducir todos los elementos con data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    // Si el elemento tiene contenido adicional (como en size y quantity)
+                    if (key === 'size' || key === 'quantity') {
+                        const value = element.textContent.split(': ')[1];
+                        element.textContent = translations[lang][key] + value;
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Traducir los títulos de los productos en el carrito
+            document.querySelectorAll('.product-info h3').forEach(title => {
+                const key = title.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    title.textContent = translations[lang][key];
+                    // También actualizar el alt de la imagen
+                    const productCard = title.closest('.product-card');
+                    if (productCard) {
+                        const img = productCard.querySelector('.product-image');
+                        if (img) {
+                            img.alt = translations[lang][key];
+                        }
+                    }
+                }
+            });
+        }
+
+        // Cargar el idioma guardado al iniciar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+            changeLanguage(savedLanguage);
+        });
+    </script>
+    <script src="../scripts/currency.js"></script>
+    <script src="../scripts/quickView.js"></script>
+    <script src="../scripts/productData.js"></script>
+    <script src="../scripts/search.js"></script>
+    <script src="../scripts/translations.js"></script>
+    <script src="../scripts/language.js"></script>
+</body>
+</html>
+
+<style>
+.limpiar {
+    width: 100%;
+    padding: 12px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 10px;
+    font-family: 'Roboto-Condensed-Bold', sans-serif;
+    letter-spacing: 1.4px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.limpiar:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.empty-cart-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 60px auto 40px auto;
+    padding: 30px 25px;
+    background: rgba(255, 0, 0, 0.06);
+    border-radius: 18px;
+    max-width: 420px;
+    box-shadow: 0 6px 24px rgba(255,0,0,0.08);
+    font-family: 'Roboto-Condensed-Bold', sans-serif;
+    border: 2px solid #ff2222;
+}
+
+.empty-cart-message p {
+    font-size: 1.5rem;
+    color: #ff2222;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(255,0,0,0.08);
+    font-family: 'Roboto-Regular', sans-serif;
+}
+</style> 
