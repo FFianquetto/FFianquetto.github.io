@@ -257,11 +257,12 @@ body {
 .kt8-logo {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .kt8-logo img {
-    height: auto;
-    width: 100%;
+    height: 50px;
+    width: auto;
     transition: all 0.3s ease;
 }
 
