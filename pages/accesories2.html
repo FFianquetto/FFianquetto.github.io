@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT8 Store - Apparel</title>
+    <script>
+        // Cargar el tema correcto antes de que se muestre la página
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        const themeLink = document.createElement('link');
+        themeLink.rel = 'stylesheet';
+        themeLink.id = 'theme-style';
+        themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+        document.head.appendChild(themeLink);
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/search.css">
+    <link rel="stylesheet" href="../styles/joinForm.css">
+    <link rel="stylesheet" href="../styles/language.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script src="../scripts/productData.js"></script>
+    <script src="../scripts/search.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo-section">
+                <img src="../assets/zomboyImg/zomboyLogo_1.png" alt="Zomboy Logo" class="logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">HOME
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="apparel.html">
+                    APPAREL
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="accesories.html" class="active">
+                    ACCESORIES
+                    <span class="brain-emoji">🧠</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="sale.html">
+                    COMING SOON
+                </a>
+                <a href="giftCard.html">
+                    GIFTCARD
+                    <div class="nav-indicator"></div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <div class="currency-selector">
+                    <select id="currency-select">
+                        <option value="USD">USD $</option><i class="fas fa-chevron-down"></i>
+                        <option value="EUR">EUR €</option><i class="fas fa-chevron-down"></i>
+                        <option value="MXN">MXN $</option><i class="fas fa-chevron-down"></i>
+                        <option value="ARS">ARS $</option><i class="fas fa-chevron-down"></i>
+                        <option value="GBP">GBP £</option><i class="fas fa-chevron-down"></i>
+                        <option value="JPY">JPY ¥</option><i class="fas fa-chevron-down"></i>
+                    </select>
+                </div>
+                <div class="language-dropdown">
+                    <button class="join-btn" onclick="toggleLanguageMenu()">Language</button>
+                    <div class="language-menu" style="display: none;">
+                        <button onclick="changeLanguage('en')">English</button>
+                        <button onclick="changeLanguage('es')">Español</button>
+                        <button onclick="changeLanguage('fr')">Français</button>
+                        <button onclick="changeLanguage('de')">Deutsch</button>
+                        <button onclick="changeLanguage('ja')">日本語</button>
+                    </div>
+                </div>
+                <button class="join-btn" onclick="openJoinForm()">JOIN US!</button>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+        </nav>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="kt8-logo">
+                <img src="../assets/zomboyImg/kt8Logo_1.png" alt="KT8 Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for...">
+            </div>
+            <div class="social-media">
+                <div class="dark-mode-toggle">
+                    <button id="darkModeBtn" onclick="toggleDarkMode()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <span>SOCIAL MEDIA</span>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+        </div>
+        <!-- Price Section -->
+        <div class="price-section">
+            <div class="product-images">
+                <div class="product-image-container">
+                    <img src="../assets/apparelImg/jerseyZ.png" alt="Zomboy Jersey" class="product-image">
+                </div>
+                <div class="product-image-container">
+                    <img src="../assets/apparelImg/hoodieZ.png" alt="Zomboy Hoodie" class="product-image">
+                </div>
+                <div class="product-image-container">
+                    <img src="../assets/apparelImg/teeZ.png" alt="Zomboy Tee" class="product-image">
+                </div>
+            </div>
+            <div class="price-boxes">
+                <div class="price-box">
+                    <div class="product-info">
+                        <h3>ZOMBOY CHROME JERSEY</h3>
+                        <span class="price-text">$90.00 USD</span>
+                    </div>
+                </div>
+                <div class="price-box">
+                    <div class="product-info">
+                        <h3>ZOMBOY VINTAGE PUNK HOODIE</h3>
+                        <span class="price-text">$75.00 USD</span>
+                    </div>
+                </div>
+                <div class="price-box">
+                    <div class="product-info">
+                        <h3>VINTAGE TEE</h3>
+                        <span class="price-text">$75.00 USD</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <div class="pagination-item">
+                    <a href="accesories.html"><span>1</span></a>
+                </div>
+                <div class="pagination-item">
+                    <a href="accesories1.html"><span>2</span></a>
+                </div>
+                <div class="pagination-item active">
+                    <span>3</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="help-button">
+            <div class="help-icon">?</div>
+            <span>Ayuda</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-text">© 2025, KT8 Merch Co All rights reserved.</div>
+        <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-apple-pay"></i>
+        </div>
+    </footer>
+
+    <script>
+        function toggleDarkMode() {
+                const themeLink = document.getElementById('theme-style');
+                const bannerImg = document.querySelector('.banner img');
+                const logoImg = document.querySelector('.logo-section img');
+                const isDarkMode = themeLink.href.includes('lightMode.css');
+
+                // Cambiar el tema CSS
+                themeLink.href = isDarkMode ? '../styles/darkMode.css' : '../styles/lightMode.css';
+
+                // Cambiar el logo
+                logoImg.src = isDarkMode ? '../assets/zomboyImg/zomboyLogo_2.png' : '../assets/zomboyImg/zomboyLogo_1.png';
+
+                // Cambiar el ícono del botón
+                        darkModeBtn.innerHTML = isDarkMode ? '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>' : '<i class="fas fa-moon"></i>';
+
+                        // Guardar preferencia
+                        localStorage.setItem('darkMode', isDarkMode);
+                    }
+
+                    if (localStorage.getItem('darkMode') === 'true') {
+                        const themeLink = document.getElementById('theme-style');
+                        const logoImg = document.querySelector('.logo-section img');
+                        themeLink.href = '../styles/darkMode.css';
+                        logoImg.src = '../assets/zomboyImg/zomboyLogo_2.png';
+                        darkModeBtn.innerHTML = '<i class="bi bi-sun" style="font-size: 1.7rem;"></i>';
+                    }
+
+    </script>
+    
+    <script src="../scripts/currency.js"></script>
+    <script src="../scripts/quickView.js"></script>
+    <script src="../scripts/translations.js"></script>
+    <script src="../scripts/language.js"></script>
+    <script>
+        function toggleLanguageMenu() {
+            const menu = document.querySelector('.language-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Cerrar el menú de idiomas al hacer clic fuera de él
+        document.addEventListener('click', (event) => {
+            const languageMenu = document.querySelector('.language-menu');
+            const languageButton = document.querySelector('.language-dropdown button');
+            
+            if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
