@@ -1,0 +1,41 @@
+.language-dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+.language-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #000000;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    padding: 8px;
+    z-index: 1;
+    min-width: 120px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.language-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: #ffffff;
+    transition: background-color 0.3s;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.language-menu button:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.language-menu button:not(:last-child) {
+    border-bottom: 1px solid #333333;
+} 

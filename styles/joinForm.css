@@ -1,0 +1,267 @@
+.form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 525px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.899);
+    border-radius: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    overflow: hidden;
+    z-index: 1001;
+    font-family: 'Roboto-Regular', sans-serif;
+    color: black;
+    backdrop-filter: blur(10px);
+}
+
+.form-image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.form-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(0.94) translate(3%, 5%);
+}
+
+.form-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: #000000;
+}
+
+.form-content .kt8-logo {
+    width: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-content .kt8-logo img {
+    width: 180px;
+    height: auto;
+    object-fit: contain;
+}
+
+.form-content h2 {
+    margin-bottom: 30px;
+    color: #000000;
+    text-align: center;
+    font-family: 'Roboto-Regular', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: black;
+    font-family: 'Roboto-Regular', sans-serif;
+    font-size: 21px;
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 0;
+    font-size: 16px;
+    color: #000000;
+    font-family: 'Roboto-Regular', sans-serif;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #000000;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 10px;
+    font-family: 'Roboto-Condensed-Bold', sans-serif;
+    letter-spacing: 1.4px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.submit-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.close-btn {
+    position: absolute;
+    top: 11px;
+    right: 28px;
+    background: none;
+    border: none;
+    font-size: 44px;
+    cursor: pointer;
+    color: #000000;
+    font-family: 'Roboto-Regular', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+    color: #000000;
+}
+
+/* Estilos para el mensaje de éxito */
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: #000;
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1002;
+    border: 2px solid #fff;
+    backdrop-filter: blur(10px);
+}
+
+.success-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.success-icon i {
+    font-size: 2.5rem;
+    color: #000;
+    animation: brainFloat 3s ease-in-out infinite;
+    position: relative;
+    top: 4px;
+    left: 1px;
+}
+
+.success-message p {
+    font-family: 'Roboto-Regular', sans-serif;
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes brainFloat {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotate(2deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(3px) rotate(-2deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.form-container .success-message {
+    z-index: 1002;
+}
+
+.success-cart-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: #000;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    padding: 32px 48px;
+    z-index: 9999;
+    font-size: 22px;
+    font-family: 'Roboto-Condensed-Bold', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s;
+}
+.success-cart-message .success-icon {
+    font-size: 40px;
+    color: #00c853;
+    margin-bottom: 12px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+} 

@@ -1,0 +1,9 @@
+.price-box {
+    cursor: url('../assets/giftcard/pixelcursor.jpg') 16 16, pointer;
+    transition: all 0.3s ease;
+}
+
+.price-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} 

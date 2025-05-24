@@ -1,0 +1,29 @@
+.slogan {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f91616db;
+    text-align: center;
+    margin: 0 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilos para modo oscuro */
+[data-theme="dark"] .slogan {
+    color: #fff;
+}
+
+.price-box {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.price-box:hover {
+    transform: scale(1.05);
+}
+
+.price-box .product-info {
+    text-align: center;
+}
+
